@@ -1,0 +1,1231 @@
+{
+	"info": {
+		"_postman_id": "10a51cda-4af5-451a-ac21-a7f9fd491cee",
+		"name": "Grilleye",
+		"description": "Reverse engineered grilleye api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Devices",
+			"item": [
+				{
+					"name": "/grills",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Temperatures",
+			"item": [
+				{
+					"name": "/grills/{{Serial number}}/probes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/probes",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"probes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/grills/{{Serial number}}/graphs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/graphs",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"graphs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Timers",
+			"item": [
+				{
+					"name": "/grills/{{Serial number}}/probes/2/timer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.6.0) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "content-length",
+								"value": "28",
+								"disabled": true
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"duration\": 3600,\r\n    \"notes\": \"\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/probes/2/timer",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"probes",
+								"2",
+								"timer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/grills/{{Serial number}}/probes/2/timer",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "content-length",
+								"value": "0"
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.6.0) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/probes/2/timer",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"probes",
+								"2",
+								"timer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sessions",
+			"item": [
+				{
+					"name": "/grills/{{Serial number}}/sessions/current",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/sessions/current",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"sessions",
+								"current"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/grills/{{Serial number}}/sessions?page=0&perPage=10",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/sessions?page=0&perPage=10",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"sessions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "perPage",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/grills/{{Serial number}}/sessions?meatType=CUSTOM&meatType=PORK&meatType=HAMBURGER&meatType=SMOKE&meatType=TURKEY&meatType=FISH&meatType=CHICKEN&meatType=VEAL&meatType=LAMB&meatType=BEEF&page=0&perPage=10",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.6.0) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/sessions?meatType=CUSTOM&meatType=PORK&meatType=HAMBURGER&meatType=SMOKE&meatType=TURKEY&meatType=FISH&meatType=CHICKEN&meatType=VEAL&meatType=LAMB&meatType=BEEF&page=0&perPage=10",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"sessions"
+							],
+							"query": [
+								{
+									"key": "meatType",
+									"value": "CUSTOM"
+								},
+								{
+									"key": "meatType",
+									"value": "PORK"
+								},
+								{
+									"key": "meatType",
+									"value": "HAMBURGER"
+								},
+								{
+									"key": "meatType",
+									"value": "SMOKE"
+								},
+								{
+									"key": "meatType",
+									"value": "TURKEY"
+								},
+								{
+									"key": "meatType",
+									"value": "FISH"
+								},
+								{
+									"key": "meatType",
+									"value": "CHICKEN"
+								},
+								{
+									"key": "meatType",
+									"value": "VEAL"
+								},
+								{
+									"key": "meatType",
+									"value": "LAMB"
+								},
+								{
+									"key": "meatType",
+									"value": "BEEF"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "perPage",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/grills/{{Serial number}}/sessions/3b8b465c-2bf1-47b2-9999-8e9f58943c27",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/sessions/8f768ac9-056b-44c8-8451-1822ed5bc9e4",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"sessions",
+								"8f768ac9-056b-44c8-8451-1822ed5bc9e4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/grills/{{Serial number}}/sessions",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "content-length",
+								"value": "0",
+								"disabled": true
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.6.0) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/sessions",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/grills/{{Serial number}}/sessions/current/finished-time",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "content-length",
+								"value": "0",
+								"disabled": true
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.6.0) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/sessions/current/finished-time",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"sessions",
+								"current",
+								"finished-time"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Presets",
+			"item": [
+				{
+					"name": "/phones/me/presets",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.6.0) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/phones/me/presets",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"phones",
+								"me",
+								"presets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/phones/me/presets",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.6.0) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "content-length",
+								"value": "108",
+								"disabled": true
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"\",\r\n    \"type\": \"PORK\",\r\n    \"readiness\": \"CUSTOM\",\r\n    \"peakTemperature\": 75.0,\r\n    \"description\": \"Testpreset\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/phones/me/presets",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"phones",
+								"me",
+								"presets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/grills/{{Serial number}}/probes/1/preset",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.6.0) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"presetId\": \"961b1643-cdba-489c-ad49-50531f1d24ec\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/probes/1/preset",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"probes",
+								"1",
+								"preset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/grills/{{Serial number}}/probes/1/preset",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "content-length",
+								"value": "0"
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.6.0) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/probes/1/preset",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"probes",
+								"1",
+								"preset"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Settings",
+			"item": [
+				{
+					"name": "/phones/settings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.6.0) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/phones/settings",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"phones",
+								"settings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/phones/settings",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.6.0) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "content-length",
+								"value": "213",
+								"disabled": true
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"autoShutdownTime\": 180,\r\n    \"unitOfMeassure\": \"CELSIUS\",\r\n    \"alarmVolume\": 1,\r\n    \"timeFormat\": \"TWENTY_FOUR_HOURS\",\r\n    \"alarmOnDisconnect\": true,\r\n    \"coolDownTime\": 600,\r\n    \"earlyAlarmDegrees\": 3,\r\n    \"screenSavingTime\": 180,\r\n    \"notificationSound\": true,\r\n    \"language\": \"GREEK\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/phones/settings",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"phones",
+								"settings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/grills/{{Serial number}}/name",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.6.0) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Grilleye Epiecs\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/name",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"name"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Logs",
+			"item": [
+				{
+					"name": "/grills/{{Serial number}}/profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.6.0) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/profile",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/grills/{{Serial number}}/graphs/csv?fromDate=2021-07-09T17%3A12%3A28.733&offsetSecondsFromGMT=7200&probes=10&probes=0&probes=1&toDate=2021-07-09T18%3A46%3A25.298",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/graphs/csv?fromDate=2021-07-09T17%3A12%3A28.733&offsetSecondsFromGMT=7200&probes=10&probes=0&probes=1&toDate=2021-07-09T18%3A46%3A25.298",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"graphs",
+								"csv"
+							],
+							"query": [
+								{
+									"key": "fromDate",
+									"value": "2021-07-09T17%3A12%3A28.733"
+								},
+								{
+									"key": "offsetSecondsFromGMT",
+									"value": "7200"
+								},
+								{
+									"key": "probes",
+									"value": "10"
+								},
+								{
+									"key": "probes",
+									"value": "0"
+								},
+								{
+									"key": "probes",
+									"value": "1"
+								},
+								{
+									"key": "toDate",
+									"value": "2021-07-09T18%3A46%3A25.298"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/phones/events?createdBefore=2021-07-12T17%3A51%3A25.446&perPage=10",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.6.0) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/phones/events?createdBefore=2021-07-12T17:51:25.446&perPage=10",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"phones",
+								"events"
+							],
+							"query": [
+								{
+									"key": "createdBefore",
+									"value": "2021-07-12T17:51:25.446"
+								},
+								{
+									"key": "perPage",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Serial number",
+			"value": "A1B2C3D4E5F6"
+		},
+		{
+			"key": "Phone-id",
+			"value": "12abc3de-4567-89f0-a123-456b789012c3"
+		}
+	]
+}

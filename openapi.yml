@@ -14,6 +14,8 @@ externalDocs:
 servers:
   - url: https://api-prod.hyperion.grilleye.com
     description: "LIVE"
+  - url: https://cors.bridged.cc/https://api-prod.hyperion.grilleye.com
+    description: "CORS-PROXY"
 
 tags:
 - name: devices
@@ -30,6 +32,9 @@ tags:
   description: Phone and app settings settings
 - name: logs
   description: Previous sessions (csv) and event logs
+
+security:
+  - phone-id: []
 
 components:
   securitySchemes:
