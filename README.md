@@ -8,7 +8,7 @@ This only works for GrillEye Max devices. You can find a store to buy one on the
 I recently bought a GrillEye Max and have been enjoying it a lot. However I don't like the fact that it doesn't have a web interface. Through the magic of computers and perseverence I have managed to reverse engineer the api. Later on my intention is to build a web interface using this.
 
 ## Before you start
-Before you can start you need to find your phone-id. This is the key that is used to authenticate you against the api. Instructions on how to do this can be found in the "How to get your phone-id" section.
+Before you begin you'll need to acquire your phone-id. This is the key that is used to authenticate you against the api. Instructions on how to do this can be found in the "How to get your phone-id" section.
 
 ## Develop your own app using the api
 If you want to develop your own application you can use the openapi.yml or the postman.json file to browse and test the api. The postman.json contains a collection with variables where you can enter your phone-id and serial number.
