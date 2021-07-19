@@ -1,0 +1,1237 @@
+openapi: '3.0.2'
+info:
+  title: Grilleye Hyperion API
+  version: '1.0'
+  description: |
+    Reverse engineered grilleye hyperion API for Grilleye MAX. This is IN NO WAY AFFILIATED 
+    with grilleye and it's lovely products. Use at your **OWN RISK**. 
+    
+    Don\'t forget to use 
+    `JSON.stringify()` to prep all your request bodies before sending. If you don\'t do 
+    this you will get a `Bad Request error`.
+externalDocs:
+  url: https://github.com/epiecs/grilleye-max-gui
+servers:
+  - url: https://api-prod.hyperion.grilleye.com
+    description: "LIVE"
+
+tags:
+- name: devices
+  description: Grilleye devices
+- name: temperatures
+  description: Temperature probe values
+- name: timers
+  description: Cooking timers
+- name: sessions
+  description: Grill sessions
+- name: presets
+  description: Grilling/probe presets, meat types, temperature ratings...
+- name: settings
+  description: Phone and app settings settings
+- name: logs
+  description: Previous sessions (csv) and event logs
+
+components:
+  securitySchemes:
+    phone-id:
+      type: apiKey
+      name: phone-id
+      description: "The captured phone-id (uuid), example: 12abc3de-4567-89f0-a123-456b789012c3"
+      in: header
+  parameters:
+    serialNumber:
+      in: path
+      name: serialNumber
+      example: A1B2C3D4E5F6
+      schema:
+        type: string
+      required: true
+      description: >
+        The serial number of your Grilleye. **You can find the serial 
+        number in the app or via running the `grills` endpoint**
+    probeId:
+      in: path
+      name: probeId
+      example: 1
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 7
+      required: true
+      description: >
+        The id of the probe which you want a value for. Goes from 0 to 7. So probe 2
+        is actually probe nr 1 etc...
+  
+  schemas:
+    ##
+    # Models
+    ##
+
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          example: SET_PRESET
+          enum:
+            - SET_PRESET
+            - ALARM
+            - DISCONNECTED
+            - UPDATE_FAILED
+        grillName:
+          type: string
+          example: My first Grilleye
+        message:
+          type: string
+          example: Custom(BBQ time boys) preset set to probe 1
+        timeCreated:
+          type: string
+          format: date-time
+        presetMeatType:
+          type: string
+          description: >
+            Built-in and custom meat types.
+          $ref:  "#/components/schemas/meatType" 
+        
+    Grilleye:
+      type: object
+      properties:
+        name:
+          type: string
+          example: My first Grilleye
+        serialNumber:
+          type: string
+          example: A1B2C3D4E5F6
+        firmwareVersion:
+          type: string
+          example: 0.3.0
+        battery:
+          type: integer
+          example: 95
+        batteryCharging:
+          type: boolean
+        connected:
+          type: boolean
+        probeData:
+          type: array
+          minItems: 8
+          maxItems: 8
+          items:
+            type: object
+            properties:
+              propeId:
+                type: integer
+              temperature:
+                type: number
+                format: float
+                nullable: true
+          example:
+            - probeId: 0
+              temperature: 105.6
+            - probeId: 1
+              temperature: 24.6
+            - probeId: 2
+              temperature: 32.0
+            - probeId: 3
+              temperature: 55.9
+            - probeId: 4
+              temperature: 23.1
+            - probeId: 5
+              temperature: 24.6
+            - probeId: 6
+              temperature: null
+            - probeId: 7
+              temperature: null     
+
+    Preset:
+      type: object
+      description: >
+        A cooking preset. If you need to define a peak temperature set 
+        minimalTemperature to null. For a temperature range define both.
+        If you make your own presets make sure to use type CUSTOM when
+        defining the readiness. Your level of readiness can be described
+        in the description field.
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+          example: 12abc3de-4567-89f0-a123-456b789012c3
+        minimalTemperature:
+          type: number
+          format: float
+          nullable: true
+          example: null
+        peakTemperature:
+          type: number
+          format: float
+          example: 94.1
+        description:
+          type: string
+          nullable: true
+          example: My custom preset
+        type:
+          type: string
+          description: >
+            Built-in and custom meat types.
+          $ref:  "#/components/schemas/meatType" 
+        readiness:
+          type: string
+          description: >
+            Built in readiness values. Use CUSTOM when defining your
+            own readiness. Default is used with the built in presets 
+            for meat types that don't have differentndoneness levels 
+            such as pork and chicken. Please do not eat medium rare chicken.
+          $ref:  "#/components/schemas/doneness"
+
+    Probe:
+      type: object
+      properties:
+        probeIndex:
+          type: integer
+          minimum: 0
+          maximum: 7
+          example: 0
+        temperature:
+          type: number
+          format: float
+          nullable: true
+          example: 18.4
+        preset:
+          nullable: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Preset'
+        timer:
+          nullable: true
+          $ref: '#/components/schemas/Timer'
+        predictedDoneTime:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2021-07-15T22:29:12.000"
+          description: >
+            The predicted done time of the item being tracked. Not always accurate 
+            so dont rely too hard on this value. Shifts constantly.
+
+    Session:
+      type: object
+      properties:
+        id:
+          type: string
+          format:  uuid
+        name:
+          type: string
+          example: My current awesome grill session
+        timeCreated:
+          type: string
+          format: date-time
+        probesIncluded:
+          $ref:  "#/components/schemas/includedProbes"
+        events:
+          type: array
+          items:
+            type: object
+            $ref:  "#/components/schemas/Event"
+
+
+    SessionData:
+      type: object
+      properties:
+        timeFinished:
+          type: string
+          format: date-time
+        probesToMeatType:
+          type: array
+          items:
+            $ref:  "#/components/schemas/probeToMeatType"
+        graphsForProbes:
+          type: array
+          items:
+            $ref:  "#/components/schemas/graphsForProbes"
+
+    Setting:
+      type: object
+      properties:
+        unitOfMeassure:
+          type: string
+          example: CELCIUS
+          enum:
+            - CELCIUS
+            - FAHRENHEIT
+        alarmVolume:
+          type: integer
+          format: float
+          description: |
+            Alarm volume described as a float from 0.0 - 1.0. 
+            
+            Only 3 values are allowed: [0.0, 0.5, 1.0]
+          example: 1.0
+          enum:
+            - 0.0
+            - 0.5
+            - 1.0
+        timeFormat:
+          type: string
+          example: TWENTY_FOUR_HOURS
+          description: >
+            Use 24 hour time or 12 hour time
+          enum:
+            - TWENTY_FOUR_HOURS
+            - TWELVE_HOURS
+        earlyAlarmDegrees:
+          type: integer
+          description: |
+            Degrees Celcius before the target temperature to receive an alarm.
+
+            Only 4 values are allowed: [0, 3, 5, 10]
+          example: 3
+          enum:
+            - 0
+            - 3
+            - 5
+            - 10
+        screenSavingTime:
+          type: integer
+          description: |
+            Seconds before the Grilleye's screen dims.
+
+            Only 4 values are allowed: [0, 180, 300, 600] (0, 3, 5, 10 minutes)
+          example: 180
+          enum:
+            - 0
+            - 180
+            - 300
+            - 600
+        autoShutdownTime:
+          type: integer
+          description: |
+            Seconds before the Grilleye's screen dims.
+
+            Only 4 values are allowed: [0, 180, 300, 600] (0, 3, 5, 10 minutes)
+          example: 180
+          enum:
+            - 0
+            - 180
+            - 300
+            - 600
+        coolDownTime:
+          type: integer
+          description: |
+            Seconds between repeating temperature alarms. This is the time in 
+            between pressing the side button or acknowledging the alarm in the app
+            before you receive a new alarm
+
+            Only 5 values are allowed: [60, 300, 600, 1800, 3600] (1, 5, 10, 30, 60 minutes)
+          example: 600
+          enum:
+            - 60
+            - 300
+            - 600
+            - 1800
+            - 3600
+        alarmOnDisconnect:
+          type: boolean
+          description: >
+            Receive an alarm when your Grilleye disconnects from wifi.
+          example: true
+        notificationSound:
+          type: boolean
+          description: >
+            Enable or disable the beeper on the Grilleye unit.
+          example: true
+        autoSwitchNetworks:
+          type: boolean
+          description: >
+            Automatically allow the Grilleye to switch between known wifi networks.
+          example: true
+        language:
+          type: string
+          example: ENGLISH
+          description: >
+            The app language
+          enum:
+            - ENGLISH
+            - GERMAN
+            - DANISH
+            - DUTCH
+            - FRENCH
+            - GREEK
+            - ITALIAN
+            - POLISH
+            - SPANISH
+
+    Timer:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 12abc3de-4567-89f0-a123-456b789012c3
+        duration:
+          type: integer
+          example: 3600
+          description: >
+            Timer runtime expressed in seconds. Used in conjunction with timeCreated
+            to calculate the remaining time.
+        timeCreated:
+          type: string
+          format: date-time
+        notes:
+          type: string
+          nullable: true
+          example: "My awesome timer"
+
+    
+    ##
+    # Enums
+    ##
+    doneness:
+      type: string
+      example: CUSTOM
+      enum:
+        - CUSTOM
+        - DEFAULT
+        - WELL_DONE
+        - MEDIUM_WELL
+        - MEDIUM
+        - MEDIUM_RARE
+        - RARE
+        - BBQ_SMOKE
+        - HOT_SMOKE
+        - COLD_SMOKE
+
+    meatType:
+      type: array
+      description: The different supported meat types.
+      example: PORK
+      items:
+        type: string
+        enum:
+          - CUSTOM
+          - BEEF
+          - CHICKEN
+          - FISH
+          - HAMBURGER
+          - LAMB
+          - PORK
+          - SMOKE
+          - TURKEY
+          - VEAL
+    
+    includedProbes:
+      type: array
+      description: >
+        An array containing all of the probe ids partaking in the current session
+      minItems: 1
+      maxItems: 8
+      items:
+        type: integer
+        enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+      example: [0, 1]
+
+    probeToMeatType:
+      type: array
+      description: >
+        An array containing which meat type the probe was responsible for
+      items:
+        type: object
+        properties:
+          probeIndex:
+            type: integer
+            minimum: 0
+            maximum: 7
+            example: 0
+          meatType:
+            type: string
+            $ref:  "#/components/schemas/meatType"
+      example:
+        - probeIndex: 0
+          meatType: PORK
+        - probeIndex: 1
+          meatType: CUSTOM
+        - probeIndex: 2
+          meatType: VEAL
+
+    graphsForProbes:
+      type: object
+      properties:
+        probeIndex:
+          type: integer
+          minimum: 0
+          maximum: 7
+          example: 0
+        graphData:
+          type: array
+          items:
+            type: object
+            minItems: 1
+            properties:
+              timestamp:
+                type: string
+                format: date-time
+              temperature:
+                type: number
+                format: float
+                nullable: true
+                example: 29.1
+      example:
+        - 
+          probeIndex: 0
+          graphData:
+          - timestamp: 2021-07-10T08:22:08.275,
+            temperature: 30.9
+          - timestamp: 2021-07-10T08:23:08.371,
+            temperature: 31.3
+          - timestamp: 2021-07-10T08:24:08.899,
+            temperature: 31.7
+        -
+          probeIndex: 1
+          graphData:
+          - timestamp: 2021-07-10T08:22:08.275,
+            temperature: 90.9
+          - timestamp: 2021-07-10T08:23:08.371,
+            temperature: 91.2
+          - timestamp: 2021-07-10T08:24:08.899,
+            temperature: 92.5
+
+paths:
+  ##
+  #   Devices
+  ##
+  /grills:
+    get:
+      tags:
+        - devices
+      summary: Overview of Grilleyes
+      description: >
+        A list of all Grilleye devices currently connected to your phone id. For every 
+        Grilleye you will get (among others) the serial number, connection and battery 
+        state and probe temperatures. 
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Grilleye'
+
+  ##
+  #   Temperatures
+  ##
+  /grills/{serialNumber}/probes:
+    parameters:
+      - $ref: '#/components/parameters/serialNumber'
+    get:
+      tags:
+        - temperatures
+      summary: Current probe temps and presets
+      description: >
+        Get all information of the probes connected to the Grilleye with this 
+        serial number, including the preset.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Probe'
+
+  /grills/{serialNumber}/graphs:
+    parameters:
+      - $ref: '#/components/parameters/serialNumber'
+    get:
+      tags:
+        - temperatures
+      summary: Temperature graph data
+      description: >
+        Get a full log of all the temperature data of each probe since the 
+        last time the grilleye was turned on. If you want to export this and 
+        view it as a csv you can find the `/grills/{{Serial number}}/graphs/csv` 
+        endpoint in the logs section.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 8
+                maxItems: 8
+                items:
+                  $ref:  "#/components/schemas/graphsForProbes"
+
+  ##
+  #   Timers
+  ##
+  /grills/{serialNumber}/probes/{probeId}/timer:
+    parameters:
+      - $ref: '#/components/parameters/serialNumber'
+      - $ref: '#/components/parameters/probeId'
+    post:
+      tags:
+        - timers
+      summary: Set a new timer for a probe
+      description: >
+        Sets a new timer for a probe. Returns the created timer. Timers have a created
+        date and a duration. You do the math.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                duration:
+                  type: integer
+                  minimum: 1
+                  description: The timer duration expressed in seconds
+                  example: 3600
+                notes:
+                  type: string
+                  example: Cook this meat for an hour
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/Timer"
+    
+    delete:
+      tags:
+        - timers
+      summary: Delete the timer for a probe
+      responses:
+        200:
+          description: OK
+          content: {}
+        400:
+          description: Probe index not in range
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+                    format: date-time
+                  path:
+                    type: string
+                    example: /grills/A1B2C3D4E5F6/probes/10/timer
+                  status:
+                    type: integer
+                    example: 400
+                  error:
+                    type: string
+                    example: Bad request
+                  message:
+                    type: string
+                    example: Probe index not in range
+                  requestId:
+                    type: string
+                    example: 33f3cc99-1586404
+        409:
+          description: Timer has already finished
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+                    format: date-time
+                  path:
+                    type: string
+                    description: Current request path
+                    example: /grills/A1B2C3D4E5F6/probes/2/timer
+                  status:
+                    type: integer
+                    example: 409
+                  error:
+                    type: string
+                    example: Conflict
+                  message:
+                    type: string
+                    example: Timer has already finished
+                  requestId:
+                    type: string
+                    example: 33f3cc99-1586404
+
+  ##
+  # Sessions
+  ##             
+  
+  /grills/{serialNumber}/sessions:
+    parameters:
+      - $ref: '#/components/parameters/serialNumber'
+    get:
+      parameters:
+        - in: query
+          name: page
+          description: Current page
+          required: true
+          example: 0
+          schema:
+            type: integer
+            minimum: 0
+        - in: query
+          name: perPage
+          description: Items per page. Minimum value is 1.
+          required: true
+          example: 10
+          schema:
+            type: integer
+            minimum: 1
+        - in: query
+          name: meatType
+          description: The Meat type. You can supply multiple values.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            $ref: '#/components/schemas/meatType'
+          example: [CUSTOM, BEEF]
+      tags:
+        - sessions
+      summary: Search for and browse sessions
+      description: >
+        Searches for past sessions. You can search for **multiple meat types** at once by using
+        either `&meatType=CUSTOM,CHICKEN,PORK` or `meatType=CUSTOM&meatType=CHICKEN&meatType=PORK`
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    type: integer
+                    minimum: 0
+                    description: The current page
+                  totalElements:
+                    type: integer
+                    minimum: 0
+                    example: 11
+                    description: >
+                      How many sessions there are in total. You can use this to provide pagination 
+                      with the `page` and `perPage` parameter.
+                  data:
+                    type: array
+                    description: >
+                      An array containing sessions
+                    minItems: 0
+                    items:
+                      allOf:
+                        - $ref:  "#/components/schemas/Session"
+                        - $ref:  "#/components/schemas/SessionData"
+    post:
+      tags:
+        - sessions
+      summary: Start a new session
+      description: >
+        Starts a new session. You need to post to this endpoint if you want to view your 
+        current session.
+      requestBody:
+        content:
+          application/json: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/Session"
+  
+  /grills/{serialNumber}/sessions/current:
+    parameters:
+      - $ref: '#/components/parameters/serialNumber'
+    get:
+      tags:
+        - sessions
+      summary: Current cooking session
+      description: >
+        The current cooking session. Use the `/grills/{serialNumber}/probes` and \
+        `/grills/{serialNumber}/current` to get all the data for this the current 
+        session. The `graph` endpoint shows all data so you need to filter 
+        what is neccesary.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/Session"
+        404:
+          description: No session found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+                    format: date-time
+                  path:
+                    type: string
+                    example: /grills/A1B2C3D4E5F6/sessions/current
+                  status:
+                    type: integer
+                    example: 404
+                  error:
+                    type: string
+                    example: Not found
+                  message:
+                    type: string
+                    example: Pending cooking session not found
+                  requestId:
+                    type: string
+                    example: 33f3cc99-1586404
+    put:
+      tags:
+        - sessions
+      summary: End the current session
+      description: >
+        Ends the current session and returns all data and events.
+      requestBody:
+        content:
+          application/json: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref:  "#/components/schemas/Session"
+                  - $ref:  "#/components/schemas/SessionData"
+
+  /grills/{serialNumber}/sessions/{sessionId}:
+    parameters:
+      - $ref: '#/components/parameters/serialNumber'
+    get:
+      parameters:
+        - in: path
+          name: sessionId
+          description: Uuid of a session
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - sessions
+      summary: Get a data for a specific sessionId
+      description: >
+        Gets all the data and events for a specific grill session. You can only use this endpoint 
+        for **finished** sessions. If you need to view the current running session use the 
+        `/grills/{serialNumber}/sessions/current` endpoint.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref:  "#/components/schemas/Session"
+                  - $ref:  "#/components/schemas/SessionData"
+
+  ##
+  #   Presets
+  ##
+  /phones/me/presets:
+    get:
+      tags:
+        - presets
+      summary: Grill presets
+      description: >
+        A list of all the grill presets.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref:  "#/components/schemas/Preset"
+    post:
+      tags:
+        - presets
+      summary: Create a new preset
+      description: >
+        Creates a new preset. id needs to be `null`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/Preset"
+            example:
+                id: null
+                minimalTemperature: null
+                peakTemperature: 94.1
+                description: My custom preset
+                type: PORK
+                readiness: CUSTOM
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/Preset"
+
+
+  /grills/{serialNumber}/probes/{probeId}/preset:
+    parameters:
+      - $ref: '#/components/parameters/serialNumber'
+      - $ref: '#/components/parameters/probeId'
+    put:
+      tags:
+        - presets
+      summary: Set a preset for a probe
+      description: >
+        Sets a preset for a probe. The presetId can be found under the `/phones/me/presets` endpoint.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                presetId:
+                  type: string
+                  format:  uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  probeIndex:
+                    type: integer
+                    minimum: 0
+                    maximum: 7
+                    example: 0
+                  preset:
+                    $ref:  "#/components/schemas/Preset"
+    delete:
+      tags:
+        - presets
+      summary: Removes a preset from a probe
+      description: >
+        Removes a probe preset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                presetId:
+                  type: string
+                  format:  uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  probeIndex:
+                    type: integer
+                    minimum: 0
+                    maximum: 7
+                    example: 0
+                  preset:
+                    type: string
+                    nullable: true
+                    example: null
+
+  ##
+  #   Settings
+  ##
+  /phones/settings:
+    get:
+      tags:
+        - settings
+      summary: Global settings
+      description: >
+        Get the global app settings. You will also receive the `language` and 
+        the `autoSwitchNetworks` value
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Setting'
+    put:
+      tags:
+        - settings
+      summary: Set new settings
+      description: >
+        This allows you to configure new settings. You can provide the `language` and 
+        the `autoSwitchNetworks` value but it will be ignored by the server.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Setting"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/Setting"
+
+  /grills/{serialNumber}/name:
+    parameters:
+      - $ref: '#/components/parameters/serialNumber'
+    put:
+      tags:
+        - settings
+      summary: Set a new friendly name
+      description: >
+        Sets a new friendly name for a Grilleye with a specific serialNumber
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example:  My fancy new Grilleye
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example:  My fancy new Grilleye
+
+  ##
+  #   Logs
+  ##
+  /grills/{serialNumber}/profile:
+    parameters:
+      - $ref: '#/components/parameters/serialNumber'
+    get:
+      tags:
+        - logs
+      summary: User profile
+      description: >
+        get the user profile with some aggregated historical data such as total cooking time and 
+        other nitbits.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cookingTime:
+                    type: integer
+                    example: 312727
+                    description: The total cooking time in seconds
+                  usagePattern:
+                    type: array
+                    items: 
+                      type: object
+                      properties:
+                        presetType:
+                          $ref:  "#/components/schemas/meatType"
+                        timesUsed:
+                          type: integer
+                          example: 15
+                        percentage:
+                          type: integer
+                          example: 30
+                      example:
+                      - presetType: PORK
+                        timesUsed: 15
+                        percentage: 30
+                      - presetType: BEEF
+                        timesUsed: 25
+                        percentage: 50
+                      - presetType: SMOKE
+                        timesUsed: 10
+                        percentage: 20
+
+  /grills/{serialNumber}/graphs/csv:
+    parameters:
+      - $ref: '#/components/parameters/serialNumber'
+    get:
+      parameters:
+        - in: query
+          name: fromDate
+          description: From which date you wish to request data
+          required: true
+          example: "2021-07-09T17:12:28.733"
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: toDate
+          description: Until which date you wish to request data
+          required: true
+          example: "2021-07-20T17:12:28.733"
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: probes
+          description: For which probes to fetch data
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: array
+            description: >
+              An array containing all of the probe ids partaking in the current session
+            minItems: 1
+            maxItems: 8
+            items:
+              type: integer
+              enum:
+                - 0
+                - 1
+                - 2
+                - 3
+                - 4
+                - 5
+                - 6
+                - 7
+            example: [0, 1]
+        - in: query
+          name: offsetSecondsFromGMT
+          description: Seconds offset from GMT. Use this to adjust the timestamps to your timezone.
+          required: false
+          schema:
+            type: string
+            example: 3600
+      tags:
+        - logs
+      summary: Temperature graph data in csv format
+      description: |
+        Get a full log of all the temperature data for the chosen probes in between the two timestamps.
+        This data is provided in csv format.
+
+        You can search for **multiple probes** at once by using
+        either `&probes=0,1,2` or `probes=0&probes=1&probes=2`
+
+        The data is delivered without headers. The columns are:
+        `probeId, preset, timestamp, temperature`
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  csv:
+                    type: string
+                    example: 
+                      "1,CUSTOM,17:12:59,141.7\n
+                      1,CUSTOM,17:12:59,141.7\n
+                      1,CUSTOM,17:13:11,143.3\n
+                      1,CUSTOM,17:14:04,147.7\n
+                      1,CUSTOM,17:14:11,147.9\n
+                      1,CUSTOM,17:15:04,149.2\n
+                      1,CUSTOM,17:15:12,149.5\n
+                      1,CUSTOM,17:16:05,151.1\n
+                      1,CUSTOM,17:16:12,151.5\n
+                      1,CUSTOM,17:17:13,151.7\n
+                      1,CUSTOM,17:17:14,151.8\n
+                      1,CUSTOM,17:18:13,153.5\n
+                      1,CUSTOM,17:18:14,153.5\n
+                      1,CUSTOM,17:19:14,154.5\n
+                      1,CUSTOM,17:19:14,154.5\n
+                      1,CUSTOM,17:20:15,155.3\n
+                      1,CUSTOM,17:20:15,155.4\n
+                      1,CUSTOM,17:21:15,155.9\n
+                      1,CUSTOM,17:21:16,155.8\n
+                      1,CUSTOM,17:22:16,156.3\n
+                      1,CUSTOM,17:22:16,156.3\n
+                      1,CUSTOM,17:23:17,155.4\n
+                      1,CUSTOM,17:24:18,156.5\n
+                      1,CUSTOM,17:25:18,156.5\n
+                      1,CUSTOM,17:26:19,156.1\n
+                      1,CUSTOM,17:27:19,156.2\n
+                      1,CUSTOM,17:28:20,156.8\n
+                      1,CUSTOM,17:29:20,157.6\n
+                      1,CUSTOM,17:30:20,157.7\n
+                      1,CUSTOM,17:31:21,158.1\n
+                      1,CUSTOM,17:32:22,159.3\n
+                      1,CUSTOM,17:33:22,160.7\n
+                      1,CUSTOM,17:34:22,161.6\n
+                      1,CUSTOM,17:35:23,161.9\n
+                      1,CUSTOM,17:36:23,162.1\n"
+
+  /phones/events:
+    get:
+      parameters:
+        - in: query
+          name: createdBefore
+          description: get events from before this date
+          required: true
+          example: "2021-07-09T17:12:28.733"
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: perPage
+          description: Amount of events to display
+          required: true
+          example: 10
+          schema:
+            type: integer
+            format: date-time
+      tags:
+        - logs
+      summary: Event log
+      description: |
+        Get a list of events that happened before a certain date.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalElements:
+                    type: integer
+                    example: 190
+                    description: >
+                      The total number of stored elements. Usefull for pagination.
+                  data:
+                    type: array
+                    items:
+                      $ref:  "#/components/schemas/Event"
