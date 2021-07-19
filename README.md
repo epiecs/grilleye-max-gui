@@ -13,7 +13,7 @@ Before you begin you'll need to acquire your phone-id. This is the key that is u
 ## Develop your own app using the api
 If you want to develop your own application you can use the openapi.yml or the postman.json file to browse and test the api. The postman.json contains a collection with variables where you can enter your phone-id and serial number.
 
-If you want to browse the api in your browser you can go to the [openapi swagger ui demo](https://petstore.swagger.io/) and enter this in the top input field: https://raw.githubusercontent.com/epiecs/grilleye-max-gui/master/openapi.yml and click explore.
+If you want to browse the api in your browser you can go to the [openapi swagger ui demo and try it online](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/epiecs/grilleye-max-gui/master/openapi.yml)
 
 ### Playing around
 If you want to test the api via the Swagger ui you will have to use the `CORS-PROXY server`. This is because the requests are blocked by [CORS](https://swagger.io/docs/open-source-tools/swagger-ui/usage/cors/). You wont have this issue when using Postman.
@@ -26,11 +26,11 @@ If you want to test the api via the Swagger ui you will have to use the `CORS-PR
 
 2. Shutdown your GrillEye
 
-3. Download the drivers at [https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers]. You need the Universal Windows driver.
+3. Download the drivers at https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers. You need the Universal Windows driver.
 
 ![download-drivers](docs/download-drivers.png)
 
-4. Shut down your GrillEye if you haven't yet and connect it to your computer via USB. It is very important that your GrillEye is shut down!
+4. Shut down your GrillEye if you haven't yet and connect it to your computer via USB. **It is very important that your GrillEye is shut down!**
 
 5. Right click your windows start button and choose device manager
 
@@ -65,4 +65,5 @@ I have blurred out my phone-id and serial number in the screenshot below but it 
 12. Shut down your GrillEye and close the Putty window.
 
 ## Thanks
+https://cors.bridged.cc - For their cors proxy that they continue to provide
 https://github.com/softius/php-cross-domain-proxy - used to bypass cors
