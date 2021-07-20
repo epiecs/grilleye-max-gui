@@ -270,45 +270,6 @@
 					"response": []
 				},
 				{
-					"name": "/grills/{{Serial number}}/sessions?page=0&perPage=10",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "phone-id",
-								"value": "{{Phone-id}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/sessions?page=0&perPage=10",
-							"protocol": "https",
-							"host": [
-								"api-prod",
-								"hyperion",
-								"grilleye",
-								"com"
-							],
-							"path": [
-								"grills",
-								"{{Serial number}}",
-								"sessions"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "perPage",
-									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "/grills/{{Serial number}}/sessions?meatType=CUSTOM&meatType=PORK&meatType=HAMBURGER&meatType=SMOKE&meatType=TURKEY&meatType=FISH&meatType=CHICKEN&meatType=VEAL&meatType=LAMB&meatType=BEEF&page=0&perPage=10",
 					"request": {
 						"method": "GET",
@@ -347,7 +308,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/sessions?meatType=CUSTOM&meatType=PORK&meatType=HAMBURGER&meatType=SMOKE&meatType=TURKEY&meatType=FISH&meatType=CHICKEN&meatType=VEAL&meatType=LAMB&meatType=BEEF&page=0&perPage=10",
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/sessions?meatType=CUSTOM&meatType=BEEF&page=0&perPage=10&fromDate=07132021&toDate=07202021",
 							"protocol": "https",
 							"host": [
 								"api-prod",
@@ -367,38 +328,6 @@
 								},
 								{
 									"key": "meatType",
-									"value": "PORK"
-								},
-								{
-									"key": "meatType",
-									"value": "HAMBURGER"
-								},
-								{
-									"key": "meatType",
-									"value": "SMOKE"
-								},
-								{
-									"key": "meatType",
-									"value": "TURKEY"
-								},
-								{
-									"key": "meatType",
-									"value": "FISH"
-								},
-								{
-									"key": "meatType",
-									"value": "CHICKEN"
-								},
-								{
-									"key": "meatType",
-									"value": "VEAL"
-								},
-								{
-									"key": "meatType",
-									"value": "LAMB"
-								},
-								{
-									"key": "meatType",
 									"value": "BEEF"
 								},
 								{
@@ -408,6 +337,14 @@
 								{
 									"key": "perPage",
 									"value": "10"
+								},
+								{
+									"key": "fromDate",
+									"value": "07132021"
+								},
+								{
+									"key": "toDate",
+									"value": "07202021"
 								}
 							]
 						}
@@ -1221,11 +1158,11 @@
 	"variable": [
 		{
 			"key": "Serial number",
-			"value": "A1B2C3D4E5F6"
+			"value": "A4E57C68D12C"
 		},
 		{
 			"key": "Phone-id",
-			"value": "12abc3de-4567-89f0-a123-456b789012c3"
+			"value": "16eeb9fa-1276-42a0-a684-408d856457d5"
 		}
 	]
 }
