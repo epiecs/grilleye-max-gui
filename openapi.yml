@@ -711,6 +711,22 @@ paths:
             type: string
             $ref: '#/components/schemas/meatType'
           example: [CUSTOM, BEEF]
+        - in: query
+          name: fromDate
+          description: Date to start from in mmddyyyy format.
+          example: "04282021"
+          required: false
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: toDate
+          description: Date to end in mmddyyyy format.
+          example: "05262021"
+          required: false
+          schema:
+            type: string
+            format: date
       tags:
         - sessions
       summary: Search for and browse sessions
