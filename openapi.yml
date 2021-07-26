@@ -580,6 +580,37 @@ paths:
                 maxItems: 8
                 items:
                   $ref:  "#/components/schemas/graphsForProbes"
+  
+  /grills/{serialNumber}/graphs/{probeId}:
+    parameters:
+      - $ref: '#/components/parameters/serialNumber'
+      - $ref: '#/components/parameters/probeId'
+    get:
+      tags:
+        - temperatures
+      summary: Temperature graph data for a specific probe
+      description: >
+        Get a full log of all the temperature data for a specific probe since the 
+        last time the grilleye was turned on.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  minItems: 1
+                  properties:
+                    timestamp:
+                      type: string
+                      format: date-time
+                    temperature:
+                      type: number
+                      format: float
+                      nullable: true
+                      example: 29.1
 
   ##
   #   Timers
