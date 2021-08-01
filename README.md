@@ -5,13 +5,12 @@
 This only works for GrillEye Max devices. You can find a store to buy one on the GrillEye website: https://grilleye.com/shops?selectedProduct=proplus_max
 
 ## Table of contents
-- [GrillEye Max gui](#grilleye-max-gui)
-  * [Why](#why)
-  * [Before you start](#before-you-start)
-  * [Develop your own app using the api](#develop-your-own-app-using-the-api)
+  - [Why](#why)
+  - [Before you start](#before-you-start)
+  - [Develop your own app using the api](#develop-your-own-app-using-the-api)
     + [Playing around](#playing-around)
-  * [How to get your phone-id](#how-to-get-your-phone-id)
-  * [Thanks](#thanks)
+  - [How to get your phone-id](#how-to-get-your-phone-id)
+  - [Thanks](#thanks)
 
 ## Why
 I recently bought a GrillEye Max and have been enjoying it a lot. However I don't like the fact that it doesn't have a web interface. Through the magic of computers and perseverence I have managed to reverse engineer the api. Later on my intention is to build a web interface using this.
