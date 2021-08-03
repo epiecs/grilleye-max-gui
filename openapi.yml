@@ -263,10 +263,14 @@ components:
       properties:
         unitOfMeassure:
           type: string
-          example: CELCIUS
+          example: CELSIUS
           enum:
-            - CELCIUS
+            - CELSIUS
             - FAHRENHEIT
+          description: |
+            Unit of measure in Celcius or Fahrenheit. Yes I know that Measure has 
+            only one s and yes I know that Celcius is written with two c's'. These 
+            are the values from the app.
         alarmVolume:
           type: integer
           format: float
@@ -314,7 +318,7 @@ components:
         autoShutdownTime:
           type: integer
           description: |
-            Seconds before the Grilleye's screen dims.
+            Seconds before the Grilleye's automatically shuts down if there are no probes connected.
 
             Only 4 values are allowed: [0, 180, 300, 600] (0, 3, 5, 10 minutes)
           example: 180
@@ -328,7 +332,7 @@ components:
           description: |
             Seconds between repeating temperature alarms. This is the time in 
             between pressing the side button or acknowledging the alarm in the app
-            before you receive a new alarm
+            before you receive a new alarm.
 
             Only 5 values are allowed: [60, 300, 600, 1800, 3600] (1, 5, 10, 30, 60 minutes)
           example: 600
@@ -1033,9 +1037,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Setting'
+                $ref: '#/components/schemas/Setting'
     put:
       tags:
         - settings
