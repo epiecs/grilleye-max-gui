@@ -5,12 +5,13 @@
 This only works for GrillEye Max devices. You can find a store to buy one on the GrillEye website: https://grilleye.com/shops?selectedProduct=proplus_max
 
 ## Table of contents
+- [GrillEye Max gui](#grilleye-max-gui)
+  - [Table of contents](#table-of-contents)
   - [Why](#why)
   - [Before you start](#before-you-start)
   - [Develop your own app using the api](#develop-your-own-app-using-the-api)
-    + [Playing around](#playing-around)
+    - [Playing around](#playing-around)
   - [How to get your phone-id](#how-to-get-your-phone-id)
-  - [Thanks](#thanks)
 
 ## Why
 I recently bought a GrillEye Max and have been enjoying it a lot. However I don't like the fact that it doesn't have a web interface. Through the magic of computers and perseverence I have managed to reverse engineer the api. Later on my intention is to build a web interface using this.
@@ -25,7 +26,6 @@ If you want to browse the api in your browser you can go to the [openapi swagger
 
 ### Playing around
 If you want to test the api via the Swagger ui you will have to use the `CORS-PROXY server`. This is because the requests are blocked by [CORS](https://swagger.io/docs/open-source-tools/swagger-ui/usage/cors/). You wont have this issue when using Postman.
-
 
 ## How to get your phone-id
 **These instructions are for Windows machines**. If you have a Linux device or Mac you don't need to download the drivers. Everything after kernel 4.x should recognize the device automatically.
@@ -71,7 +71,3 @@ I have blurred out my phone-id and serial number in the screenshot below but it 
 ![phone-id](docs/phone-id.png)
 
 12. Shut down your GrillEye and close the Putty window.
-
-## Thanks
-https://cors.bridged.cc - For their cors proxy that they continue to provide
-https://github.com/softius/php-cross-domain-proxy - used to bypass cors
