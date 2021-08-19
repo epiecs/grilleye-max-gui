@@ -992,7 +992,14 @@ paths:
             application/json:
               schema:
                 $ref:  "#/components/schemas/Preset"
-
+    delete:
+      tags:
+        - presets
+      summary: Delete the preset
+      responses:
+        200:
+          description: OK
+          content: {}
 
   /grills/{serialNumber}/probes/{probeId}/preset:
     parameters:

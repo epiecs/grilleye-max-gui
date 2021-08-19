@@ -701,7 +701,7 @@
 							},
 							{
 								"key": "phone-id",
-								"value": "16eeb9fa-1276-42a0-a684-408d856457d5"
+								"value": "{{Phone-id}}"
 							},
 							{
 								"key": "user-agent",
@@ -743,6 +743,72 @@
 								"me",
 								"presets",
 								"0695e7e5-1f07-4389-a1b9-004012c11ded"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/phones/me/presets/e45df37f-e163-4157-9155-7ab6f40125b4",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "content-length",
+								"value": "0",
+								"disabled": true
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.7.1) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							},
+							{
+								"key": "x-postman-captr",
+								"value": "7997145"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/phones/me/presets/e45df37f-e163-4157-9155-7ab6f40125b4",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"phones",
+								"me",
+								"presets",
+								"e45df37f-e163-4157-9155-7ab6f40125b4"
 							]
 						}
 					},
