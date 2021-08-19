@@ -198,9 +198,9 @@ components:
           description: >
             Built in readiness values. Use CUSTOM when defining your
             own readiness. Default is used with the built in presets 
-            for meat types that don't have differentndoneness levels 
+            for meat types that don't have different readiness levels 
             such as pork and chicken. Please do not eat medium rare chicken.
-          $ref:  "#/components/schemas/doneness"
+          $ref:  "#/components/schemas/readiness"
 
     Probe:
       type: object
@@ -408,7 +408,7 @@ components:
     ##
     # Enums
     ##
-    doneness:
+    readiness:
       type: string
       example: CUSTOM
       enum:
