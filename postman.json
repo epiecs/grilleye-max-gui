@@ -83,7 +83,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/graphs",
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/graphs?offsetSecondsFromGMT=7200",
 							"protocol": "https",
 							"host": [
 								"api-prod",
@@ -95,6 +95,42 @@
 								"grills",
 								"{{Serial number}}",
 								"graphs"
+							],
+							"query": [
+								{
+									"key": "offsetSecondsFromGMT",
+									"value": "7200"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/grills/{{Serial number}}/graphs/1",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/graphs/1",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"graphs",
+								"1"
 							]
 						}
 					},
@@ -643,6 +679,76 @@
 					"response": []
 				},
 				{
+					"name": "/phones/me/presets/6df60e8e-a312-430b-ad50-39b0eb9c6ae5",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "phone-id",
+								"value": "16eeb9fa-1276-42a0-a684-408d856457d5"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.7.1) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "content-length",
+								"value": "196",
+								"disabled": true
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							},
+							{
+								"key": "x-postman-captr",
+								"value": "9583729"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"minimalTemperature\": 160,\r\n    \"peakTemperature\": 180,\r\n    \"type\": \"CUSTOM\",\r\n    \"description\": \"Ambient Chicken Cook\",\r\n    \"readiness\": \"CUSTOM\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/phones/me/presets/0695e7e5-1f07-4389-a1b9-004012c11ded",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"phones",
+								"me",
+								"presets",
+								"0695e7e5-1f07-4389-a1b9-004012c11ded"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/grills/{{Serial number}}/probes/1/preset",
 					"request": {
 						"method": "PUT",
@@ -871,7 +977,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"autoShutdownTime\": 180,\r\n    \"unitOfMeassure\": \"CELSIUS\",\r\n    \"alarmVolume\": 1,\r\n    \"timeFormat\": \"TWENTY_FOUR_HOURS\",\r\n    \"alarmOnDisconnect\": true,\r\n    \"coolDownTime\": 600,\r\n    \"earlyAlarmDegrees\": 3,\r\n    \"screenSavingTime\": 180,\r\n    \"notificationSound\": true,\r\n    \"language\": \"GREEK\"\r\n}"
+							"raw": "{\r\n  \"unitOfMeassure\": \"CELSIUS\",\r\n  \"alarmVolume\": \"0.5\",\r\n  \"timeFormat\": \"TWENTY_FOUR_HOURS\",\r\n  \"earlyAlarmDegrees\": 3,\r\n  \"screenSavingTime\": 180,\r\n  \"autoShutdownTime\": 180,\r\n  \"notificationSound\": true,\r\n  \"alarmOnDisconnect\": true,\r\n  \"autoSwitchNetworks\": true,\r\n  \"coolDownTime\": 600,\r\n  \"language\": \"ENGLISH\"\r\n}"
 						},
 						"url": {
 							"raw": "https://api-prod.hyperion.grilleye.com/phones/settings",

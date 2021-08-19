@@ -66,6 +66,16 @@ components:
       description: >
         The id of the probe which you want a value for. Goes from 0 to 7. So probe 2
         is actually probe nr 1 etc...
+    presetId:
+      in: path
+      name: presetId
+      example: c3210d4d-ea6b-44b3-b8e2-a9a3f4f57e70
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: >
+        The uuid of the preset you want to view or modify.
   
   schemas:
     ##
@@ -909,6 +919,7 @@ paths:
   ##
   #   Presets
   ##
+
   /phones/me/presets:
     get:
       tags:
@@ -939,6 +950,36 @@ paths:
               $ref:  "#/components/schemas/Preset"
             example:
                 id: null
+                minimalTemperature: null
+                peakTemperature: 94.1
+                description: My custom preset
+                type: PORK
+                readiness: CUSTOM
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/Preset"
+  
+  /phones/me/presets/{presetId}:
+    parameters:
+      - $ref: '#/components/parameters/presetId'
+    put:
+      tags:
+        - presets
+      summary: Update a preset
+      description: >
+        Updates a preset. The UUID is provided via the url. It is not neccesary to 
+        provide the url in the body. Upon returning your preset will have a new ID. ID's 
+        are not re-used.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/Preset"
+            example:
                 minimalTemperature: null
                 peakTemperature: 94.1
                 description: My custom preset
