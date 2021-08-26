@@ -868,6 +868,10 @@ paths:
                   requestId:
                     type: string
                     example: 33f3cc99-1586404
+                    
+  /grills/{serialNumber}/sessions/current/finished-time:
+    parameters:
+      - $ref: '#/components/parameters/serialNumber'
     put:
       tags:
         - sessions
