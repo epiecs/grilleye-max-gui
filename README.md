@@ -28,8 +28,11 @@ If you want to browse the api in your browser you can go to the [openapi swagger
 If you want to test the api via the Swagger ui you will have to use the `CORS-PROXY server`. This is because the requests are blocked by [CORS](https://swagger.io/docs/open-source-tools/swagger-ui/usage/cors/). You wont have this issue when using Postman.
 
 ## How to get your phone-id
-**These instructions are for Windows machines**. If you have a Linux device or Mac you don't need to download the drivers. Everything after kernel 4.x should recognize the device automatically.
+If you have a Linux device or Mac you don't need to download drivers, on Windows you need to install a specific one. 
+For Linux, everything after kernel 4.x should recognize the device automatically. A recent Mac should also suffice.
 
+### Windows
+**These instructions are for Windows machines**. If you have a Linux device or Mac you don't need to download the drivers. Everything after kernel 4.x should recognize the device automatically.
 1. Setup your GrillEye via the app and make sure that it can connect via the wifi.
 
 2. Shutdown your GrillEye
@@ -71,3 +74,6 @@ I have blurred out my phone-id and serial number in the screenshot below but it 
 ![phone-id](docs/phone-id.png)
 
 12. Shut down your GrillEye and close the Putty window.
+
+### Mac/Linux
+On a Mac or Linux system, you can do `screen /dev/tty.usbserial-1460 115200` and start at step 10 of the Windows process. 
