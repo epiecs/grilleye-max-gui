@@ -905,7 +905,7 @@ paths:
             format: uuid
       tags:
         - sessions
-      summary: Get a data for a specific sessionId
+      summary: Get data for a specific sessionId
       description: >
         Gets all the data and events for a specific grill session. You can only use this endpoint 
         for **finished** sessions. If you need to view the current running session use the 
@@ -919,6 +919,24 @@ paths:
                 allOf:
                   - $ref:  "#/components/schemas/Session"
                   - $ref:  "#/components/schemas/SessionData"
+
+  /sessions/{sessionId}:
+    delete:
+      parameters:
+        - in: path
+          name: sessionId
+          description: Uuid of a session
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - sessions
+      summary: Delete a session
+      responses:
+        200:
+          description: OK
+          content: {}
 
   ##
   #   Presets

@@ -306,7 +306,7 @@
 					"response": []
 				},
 				{
-					"name": "/grills/{{Serial number}}/sessions?meatType=CUSTOM&meatType=PORK&meatType=HAMBURGER&meatType=SMOKE&meatType=TURKEY&meatType=FISH&meatType=CHICKEN&meatType=VEAL&meatType=LAMB&meatType=BEEF&page=0&perPage=10",
+					"name": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/sessions?page=0&perPage=10",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -381,6 +381,92 @@
 								{
 									"key": "toDate",
 									"value": "07202021"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/grills/{{Serial number}}/sessions?meatType=CUSTOM&meatType=PORK&meatType=HAMBURGER&meatType=SMOKE&meatType=TURKEY&meatType=FISH&meatType=CHICKEN&meatType=VEAL&meatType=LAMB&meatType=BEEF&page=0&perPage=10 Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.6.0) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/grills/{{Serial number}}/sessions?page=0&perPage=10",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"grills",
+								"{{Serial number}}",
+								"sessions"
+							],
+							"query": [
+								{
+									"key": "meatType",
+									"value": "CUSTOM",
+									"disabled": true
+								},
+								{
+									"key": "meatType",
+									"value": "BEEF",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "perPage",
+									"value": "10"
+								},
+								{
+									"key": "fromDate",
+									"value": "07132021",
+									"disabled": true
+								},
+								{
+									"key": "toDate",
+									"value": "07202021",
+									"disabled": true
 								}
 							]
 						}
@@ -536,6 +622,71 @@
 								"sessions",
 								"current",
 								"finished-time"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/sessions/e42c2e33-5e05-478d-9fe0-7bd2610f1c81",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "host",
+								"value": "api-prod.hyperion.grilleye.com"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "content-length",
+								"value": "0",
+								"disabled": true
+							},
+							{
+								"key": "connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "user-agent",
+								"value": "GrillEye Hyperion/1.0 (com.grilleye.hyperion; build:4; iOS 14.7.1) Alamofire/5.0.5"
+							},
+							{
+								"key": "accept-language",
+								"value": "en;q=1.0"
+							},
+							{
+								"key": "accept-encoding",
+								"value": "br;q=1.0, gzip;q=0.9, deflate;q=0.8"
+							},
+							{
+								"key": "phone-id",
+								"value": "{{Phone-id}}"
+							},
+							{
+								"key": "x-postman-captr",
+								"value": "5590512",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://api-prod.hyperion.grilleye.com/sessions/e42c2e33-5e05-478d-9fe0-7bd2610f1c81",
+							"protocol": "https",
+							"host": [
+								"api-prod",
+								"hyperion",
+								"grilleye",
+								"com"
+							],
+							"path": [
+								"sessions",
+								"e42c2e33-5e05-478d-9fe0-7bd2610f1c81"
 							]
 						}
 					},
