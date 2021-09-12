@@ -16,9 +16,13 @@ This only works for GrillEye Max devices. You can find a store to buy one on the
   - [How to get your phone-id](#how-to-get-your-phone-id)
     - [Windows](#windows)
     - [Mac/Linux](#maclinux)
+  - [Screenshots](#screenshots)
+  - [Disclaimer](#disclaimer)
 
 ## Why
-I recently bought a GrillEye Max and have been enjoying it a lot. However I don't like the fact that it doesn't have a web interface. Through the magic of computers and perseverence I have managed to reverse engineer the api. Later on my intention is to build a web interface using this.
+I recently bought a GrillEye Max and have been enjoying it a lot. However I don't like the fact that it doesn't have a web interface. Through the magic of computers and perseverence I have managed to reverse engineer the api. I have used this to build a web interface.
+
+The web interface should allow you to do all the things that you can do in the app. Some things are not yet implemented and can be found on the [roadmap](#roadmap).
 
 ## Before you start
 Before you begin you'll need to acquire your phone-id. This is the key that is used to authenticate you against the api. Instructions on how to do this can be found in the "[How to get your phone-id](#how-to-get-your-phone-id)" section.
@@ -100,3 +104,15 @@ I have blurred out my phone-id and serial number in the screenshot below but it 
 
 ### Mac/Linux
 On a Mac or Linux system, you can do `screen /dev/tty.usbserial-1460 115200` and start at step 10 of the Windows process. 
+
+## Screenshots
+
+![gui-dashboard](docs/screenshots/gui-dashboard.png)
+![gui-preset](docs/screenshots/gui-preset.png)
+![gui-session](docs/screenshots/gui-session.png)
+![gui-settings](docs/screenshots/gui-settings.png)
+
+## Disclaimer
+I tried to be as gentle with api calls towards the hyperion API as I possible could. Please use this respectfully and don't start being a dick towards the GrillEye folks.
+
+And as always. This is free software. I take no responsibility whatsoever if things go wrong or you accidently delete something,...
