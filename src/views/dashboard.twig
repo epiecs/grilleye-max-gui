@@ -1,0 +1,80 @@
+{% extends "layouts/default.twig" %}
+
+{% block content %}
+<div class="row">
+    <h2>Dashboard</h2>
+</div>
+
+<div class="row row-cols-2 row-cols-md-2 g-2">
+    <div class="col">
+        <div class="card text-white bg-secondary">
+            <div class="card-body py-2 px-3">
+                <div class="row row-cols-1 row-cols-md-2">
+                    <div class="col">
+                        <div class="col">
+                            <h5 id="grill-name">{{ grill.name }}</h5>
+                        </div>
+                        <div class="col">
+                            <span class="badge bg-success" id="grill-battery">Battery: <span>{{ grill.battery }}</span>%</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="col probe-info" id="grill-serialnumber">
+                            {{ grill.serialNumber }}
+                        </div>
+                        <div class="col probe-info" id="grill-firmware">
+                            Firmware {{ grill.firmwareVersion }}
+                        </div>
+                        <div class="col probe-info">
+                            <span class="badge bg-success" id="grill-connected">Connected</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        Start/stop session
+        <!-- <div class="card">
+            <div class="card-body">
+                <div class="row row-cols-1 row-cols-md-2">
+                    <div class="col">
+                        <div class="col">
+                            <h5>Profile</h5>
+                        </div>
+                    </div>
+                    <div class="col">
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<div class="row pt-3">
+    <h3>Probes</h3>
+</div>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-2">
+    {% for probe in probes %}
+        {% include 'elements/probe.twig' with {'probe': probe} %}
+    {% endfor %}
+</div>
+<div class="row py-2">
+	<div class="col">
+		{% include 'elements/livetemperaturegraph.twig' with {
+			'chart': {
+				'id'    : 'livetemperatures',
+				'title' : "Live temperatures - Last " ~ settings.liveMinutes ~ " minutes - aggregates every minute",
+				'height': 350,
+				'data'  : temperatures,
+				'colors': colors,
+			}
+		} %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="/assets/js/dashboard.js"></script>
+{% endblock %}

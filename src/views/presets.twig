@@ -1,0 +1,101 @@
+{% extends "layouts/default.twig" %}
+
+{% block content %}
+<div class="row">
+    <h2>Presets</h2>
+</div>
+
+<div class="row py-3">
+    <h4>Create a new preset</h4>
+</div>
+
+<form method="post" action="/presets">
+    <div class="row">
+
+        <input type="hidden" name="id" value="">
+
+        <div class="py-2 col-lg-2 col-md-4">
+            <select class="form-select" id="type" name="type">
+                <option selected>Meat Type</option>
+                {% for apival,meatType in meatTypes %}
+                <option value="{{ apival }}" >{{ meatType|capitalize}}</option>
+                {% endfor %}
+            </select>
+            <input type="hidden" name="readiness" value="">
+        </div>
+        <div class="py-2 col-lg-2 col-md-4">
+            <input type="number" min="0" max="300" step="0.1" class="form-control" placeholder="Min temp {{temperatureUnit}}" aria-label="Minimum Temperature" name="minimalTemperature">
+        </div>
+        <div class="py-2 col-lg-2 col-md-4">
+            <input type="number" min="0" max="300" step="0.1" class="form-control" placeholder="Max temp {{temperatureUnit}}" aria-label="Peak Temperature" name="peakTemperature">
+        </div>
+        <div class="py-2 col-lg-5 col-md-10">
+            <input type="text" class="form-control" placeholder="Description" aria-label="Description" name="description">
+        </div>
+        <div class="py-2 col-lg-1 col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Save</button>
+        </div>
+    </div>
+</form>
+
+{% for meatType,presets in sortedPresets %}
+    <div class="row py-3">
+        <h4>{{ meatType|capitalize  }}</h4>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-2">
+        
+        {% for preset in presets %}
+
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <h5 class="card-title">{{ preset.description }}</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-8 col-lg-8 col-xl-7">
+                                {% if preset.minimalTemperature %}
+                                    {{ preset.minimalTemperature }}{{temperatureUnit}} - 
+                                {% endif %}
+                                {{ preset.peakTemperature }}{{temperatureUnit}}
+                            </div>
+                            <div class="col-4 col-lg-4 col-xl-5 text-end">
+                                {# <a class="btn btn-sm btn-primary" href="/presets/edit/{{ preset.id }}" role="button"><i class="bi bi-pencil-square"></i></a> #}
+                                <button class="btn btn-sm btn-danger" role="button" data-bs-toggle="modal" data-bs-target="#modal-{{preset.id}}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modal-{{preset.id}}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ModalLabel">Are you sure?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <form method="post" action="/presets/delete">
+                                <button type="submit" class="btn btn-sm btn-danger" role="button" name="presetId" value="{{ preset.id }}">
+                                    Yes, delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Modal -->
+        {% endfor %}
+    </div>
+
+    
+{% endfor %}
+
+
+{% endblock %}

@@ -1,0 +1,16 @@
+.nav-link {
+    color: #A72920;
+}
+
+.nav-link:focus, .nav-link:hover {
+    color: #000000;
+}
+
+.probe-temperature {
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.probe-info {
+    font-size: 0.8em;
+}

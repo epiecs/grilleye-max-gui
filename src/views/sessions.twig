@@ -1,0 +1,138 @@
+{% extends "layouts/default.twig" %}
+
+{% block content %}
+<div class="row">
+    <h2>Sessions</h2>
+</div>
+
+<div class="row py-3">
+    <h4>Filter sessions</h4>
+</div>
+
+<form method="get" action="/sessions">
+    <div class="row">
+        {% for apival,meatType in meatTypes %}
+        <div class="py-2 col-lg-2 col-md-3 col-sm-4 col-6">
+            <div class="form-check">
+                <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    value="{{ apival }}" 
+                    id="meatType_{{ meatType }}" 
+                    name="{{ apival }}"
+                    {% if filters[apival] %}
+                        checked
+                    {% endif %}   
+                >
+                <label class="form-check-label" for="{{ meatType }}">
+                    {{ meatType|capitalize}}
+                </label>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+        
+    <div class="row">
+        <div class="py-2 col-auto">
+            <label for="fromDate" class="col-form-label">From</label>
+        </div>
+        <div class="py-2 col-lg-3 col-md-3 col-4">
+            <input type="date" class="form-control" aria-label="fromDate" name="fromDate" value="{{ filters.fromDate }}">
+        </div>
+        
+        <div class="py-2 col-auto">
+            <label for="toDate" class="col-form-label">To</label>
+        </div>
+        <div class="py-2 col-lg-3 col-md-3 col-4">
+            <input type="date" class="form-control" aria-label="toDate" name="toDate" value="{{ filters.toDate }}">
+        </div>
+
+        <div class="py-2 col-auto">
+            <label for="perPage" class="col-form-label">Show</label>
+        </div>
+        <div class="py-2 col-2">
+            <select class="form-select" id="perPage" name="perPage">
+                {% for sessioncount in pagination %}
+                <option value="{{ sessioncount }}" {% if sessioncount == perPage %} selected {% endif %} >{{ sessioncount }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="py-2 col-lg-1 col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Filter</button>
+        </div>
+    </div>
+</form>
+    
+<div class="row py-3">
+    <h4>Sessions</h4>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-2">
+    
+    {% for session in sessions %}
+
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <h5 class="card-title">
+                            {% if session.name %}
+                                {{ session.name }}
+                            {% else %}
+                                {{ session.timeCreated|date("Y-m-d") }}
+                            {% endif %}    
+                        </h5>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            Probes: {{ session.probesIncluded|length }} <br />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            Date: {{ session.timeCreated }} <br />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 col-lg-8 col-xl-7">
+                            Duration: {{ session.duration|date("H:i") }}
+                        </div>
+                        <div class="col-4 col-lg-4 col-xl-5 text-end">
+                            
+                            <a class="btn btn-sm btn-primary" href="/sessions/{{ session.id }}" role="button"><i class="bi bi-info-circle"></i></a>
+                            <button class="btn btn-sm btn-danger" role="button" data-bs-toggle="modal" data-bs-target="#modal-{{session.id}}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modal-{{session.id}}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ModalLabel">Are you sure?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <form method="post" action="/sessions/delete">
+                            <button type="submit" class="btn btn-sm btn-danger" role="button" name="sessionId" value="{{ session.id }}">
+                                Yes, delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Modal -->
+
+    {% endfor %}
+</div>
+
+
+{% endblock %}

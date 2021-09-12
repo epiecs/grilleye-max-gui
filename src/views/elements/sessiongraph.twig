@@ -1,0 +1,66 @@
+<div id="{{ chart.id }}"></div>
+
+<script type="text/javascript">
+
+    window.addEventListener('load', function () {
+
+        console.log({{ chart.data|json_encode|raw }});
+
+        let options = {
+            series: {{ chart.data|json_encode|raw }},
+            chart: {
+                type: 'line',
+                stacked: false,
+                height: {{ chart.height }},
+                zoom: {
+                    type: 'x',
+                    enabled: true,
+                    autoScaleYaxis: true
+                },
+                animations: {
+                    enabled: false
+                },
+            },
+            dataLabels: {
+                enabled: false
+            },
+            markers: {
+                size: 0,
+            },
+            title: {
+                text: "{{ chart.title }}",
+                align: 'left'
+            },
+            xaxis: {
+                type: 'datetime',
+                labels: {
+                    formatter: function (timestamp, value) {
+                        return moment(timestamp).format("HH:mm");
+                    },
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Temperature'
+                },
+                min: 0
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 2
+            },
+            colors: {{chart.colors|json_encode|raw}},
+            noData: {
+                text: 'Loading...'
+            },
+            tooltip: {
+                fillSeriesColor: true,
+                shared: false
+            }
+        };
+        
+        let chart = new ApexCharts(document.querySelector("#{{ chart.id }}"), options);
+        chart.render();
+    });
+
+</script>

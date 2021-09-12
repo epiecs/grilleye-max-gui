@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Gregory Bers">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <title>Grilleye Max - Web</title>
+    <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon" />
+    
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <link href="/assets/css/app.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <main id="app">
+        <div class="container">
+            <div class="row py-2">
+              {% include 'elements/nav.twig' %}
+            </div>
+            
+            {% if alert %}
+            <div class="row py-2">
+              <div class="alert alert-{{ alert.type }} alert-dismissible fade show" role="alert">
+                  <strong>{{ alert.type | capitalize }}</strong> {{ alert.message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+
+        </div>
+    </main>
+    
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Apex charts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+
+    <!-- App -->
+    <script src="https://cdn.jsdelivr.net/npm/deep-diff@1/dist/deep-diff.min.js"></script>
+
+    {% block scripts %}{% endblock %}
+
+    {# <script type="module" src="/assets/js/app.js"></script> #}
+  </body>
+</html>

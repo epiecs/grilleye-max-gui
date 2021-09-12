@@ -3,3 +3,4 @@
 /vendor
 /notes
 composer.lock
+.env
