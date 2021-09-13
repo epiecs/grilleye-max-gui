@@ -933,10 +933,7 @@ paths:
         - sessions
       summary: Current cooking session details
       description: >
-        The current cooking session. Use the `/grills/{serialNumber}/probes` and \
-        `/grills/{serialNumber}/current` to get all the data for this the current 
-        session. The `graph` endpoint shows all data so you need to filter 
-        what is neccesary.
+        The same as the current session. Also includes which probes have which meat type assigned.
       responses:
         '200':
           description: OK

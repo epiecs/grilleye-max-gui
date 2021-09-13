@@ -8,6 +8,9 @@ error_reporting(E_ALL);
 //TODO if session has started provide session graph on the dashboard under the live temperatures. Update every minute.
 //TODO make graph one reusable element and just push data where needed with js
 
+//TODO delete session button on view session page
+//TODO clean up index php and start working with namespaces.
+
 use DI\Container;
 
 use Psr\Http\Message\ResponseInterface as Response;
