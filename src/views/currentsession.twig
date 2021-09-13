@@ -1,0 +1,148 @@
+{% extends "layouts/default.twig" %}
+
+{% block content %}
+
+
+<div class="row">
+	<div class="col">
+		<h5>{{ session.name | default("Nameless session")}}</h5>
+	</div>
+</div>
+<form method="post" action="/sessions/update">
+	<div class="row py-2">
+		<div class="col">
+			<div class="row">
+				<label for="includedprobes" class="col-sm-3 col-form-label">Included Probes</label>
+				<div class="col-sm-9">
+					<div class="row">
+						{% for probeId in 1..8 %}
+						<!-- TODO selected if probe is included -->
+							<div class="col-auto">
+	
+								<div class="form-check form-switch">
+									<input class="form-check-input" type="checkbox" id="includedprobes[{{probeId}}]" name="includedprobes[{{probeId}}]" {% if grilleyesettings.notificationSound %} checked{% endif %} {{ disabled }}>
+									<label class="form-check-label" for="includedprobes[{{probeId}}]">
+										{{ probeId }}
+									</label>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<label for="sessionName" class="col-sm-3 col-form-label">Name</label>
+		<div class="col-sm-9 py-2">
+			<input class="form-control form-control-sm" type="text" id="session-name" name="sessionName" value="{{ session.name }}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<button type="submit" class="btn btn-sm btn-primary">Update</button>
+		</div>
+	</div>
+</form>
+
+
+<div class="row">
+	<div class="col-sm-9">
+		<h2>
+			{% if session.name %}
+			{{ session.name }}
+			{% else %}
+			{{ session.timeCreated|date("Y-m-d") }}
+			{% endif %}
+		</h2>
+	</div>
+	<div class="col-sm-3 text-end">
+		<a type="button" class="btn btn-sm btn-dark" target="_blank" href="/sessions/csv/{{ session.id }}">Download graph CSV</a>
+	</div>
+</div>
+
+<dl class="row">
+	<dt class="col-sm-3">Started</dt>
+    <dd class="col-sm-9">{{ session.timeCreated|date("Y-m-d H:i") }}</dd>
+	
+    <dt class="col-sm-3">Finished</dt>
+    <dd class="col-sm-9">{{ session.timeFinished|date("Y-m-d H:i") }}</dd>
+	
+    <dt class="col-sm-3">Duration</dt>
+    <dd class="col-sm-9">{{ session.duration }}</dd>
+	
+    <dt class="col-sm-3">Probes</dt>
+    <dd class="col-sm-9">
+		{% for probe in session.probeToMeatType %}
+        <dl class="row">
+			<dt class="col-sm-4">Probe {{ probe.probeIndex +1}}</dt>
+            <dd class="col-sm-8">
+				
+				{% if probe.meatType %}
+				{{ meatTypes[probe.meatType] }}
+                {% else %}
+				No preset set
+                {% endif %}
+            </dd>
+        </dl>
+        {% endfor %}
+    </dd>
+</dl>
+
+<div class="row py-2">
+	<h4>Graph</h4>
+</div>
+
+<div class="row">
+	<div class="col">
+		{% include 'elements/sessiongraph.twig' with {
+			'chart': {
+				'id'    : 'sessionGraph',
+				'title' : session.name,
+				'height': 350,
+				'data'  : temperatures,
+				'colors': colors,
+			}
+		} %}
+    </div>
+</div>
+
+<div class="row py-2">
+	<h4>Events</h4>
+</div>
+
+<div class="row">
+	<div class="col">
+		<table class="table table-sm  table-hover">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Time</th>
+                </tr>
+            </thead>
+            <tbody>
+				
+				{% for key,event in session.events %}
+                
+				{% set rowClass = '' %}
+				{% if event.type == "ALARM" %}{% set rowClass = 'table-warning' %}{% endif %}
+				{% if event.type == "DISCONNECTED" %}{% set rowClass = 'table-danger' %}{% endif %}
+				{% if event.type == "SET_PRESET" %}{% set rowClass = 'table-primary' %}{% endif %}
+				
+				<tr class="{{ rowClass }}">
+					<th scope="row">{{ key+1 }}</th>
+					<td>{{ eventTypes[event.type] }}</td>
+					<td>{{ event.message }}</td>
+					<td>{{ event.timeCreated|date("Y-m-d H:i") }}</td>
+				</tr>
+                {% endfor %}
+            </tbody>
+			
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+

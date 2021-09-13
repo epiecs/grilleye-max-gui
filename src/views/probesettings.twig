@@ -1,0 +1,60 @@
+{% extends "layouts/default.twig" %}
+
+{% block content %}
+<div class="row">
+    <h2>Probes</h2>
+</div>
+
+<form method="post" action="/probes/settings">
+
+    {% for probe in probes %}
+        <div class="row mb-3">
+            <label for="probe-{{ probe.probeIndex }}" class="col-auto col-form-label">Probe {{ probe.probeIndex + 1 }} preset</label>
+            <div class="col-auto">
+                <select class="form-select" id="probes[{{ probe.probeIndex }}][preset]" name="probes[{{ probe.probeIndex }}][preset]">
+                    <option {% if not probe.preset.id %}selected{% endif %} value="">Choose one</option>                    
+                    {% for presetcategory,presets in sortedpresets %}
+                        <optgroup label="{{ presetcategory|capitalize }}">
+                            {% for preset in presets %}
+                                <option {% if probe.preset.id == preset.id %} selected="selected"{% endif %} value="{{ preset.id }}">{{ preset.description }}</option>
+                            {% endfor %}
+                        </optgroup>
+                    {% endfor %}
+                    
+                </select>
+            </div>
+            <label for="probe-{{ probe.probeIndex }}" class="col-auto col-form-label">Timer H:m</label>
+            <div class="col-1">
+                <select class="form-select" id="probes[{{ probe.probeIndex }}][timer][hours]" name="probes[{{ probe.probeIndex }}][timer][hours]">
+                    {% if not probe.timer.hours %}
+                        <option selected value=0>H</option>
+                    {% endif %}
+                    {% for hour in 00..23 %}
+                        <option {% if probe.timer.hours is same as (hour) %} selected="selected"{% endif %} value="{{ hour }}">{{hour}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-1">
+                <select class="form-select" id="probes[{{ probe.probeIndex }}][timer][minutes]" name="probes[{{ probe.probeIndex }}][timer][minutes]">
+                    {% if not probe.timer.minutes %}
+                        <option selected value=0>m</option>
+                    {% endif %}
+                    {% for minute in 00..59 %}
+                        <option {% if probe.timer.minutes is same as (minute) %} selected="selected"{% endif %} value="{{ minute }}">{{minute}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-4">
+                <input class="form-control" type="text" id="probes[{{ probe.probeIndex }}][timer][notes]" name="probes[{{ probe.probeIndex }}][timer][notes]" placeholder="Timer note" value="{{ probe.timer.notes }}">
+            </div>
+        </div>        
+    {% endfor %}
+
+    <div class="row">
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

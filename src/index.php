@@ -642,9 +642,54 @@ $app->map(['GET', 'POST'], '/probes/settings', function (Request $request, Respo
     if($request->getMethod() == 'POST')
     {
         $data = $request->getParsedBody();
-        s($data);
-        exit;
-     
+        
+        foreach($data['probes'] as $probeId => $probe)
+        {
+            // 0 => array (2) [
+            //     'preset' => string (0) ""
+            //     'timer' => array (3) [
+            //         'hours' => string (1) "1"
+            //         'minutes' => string (2) "49"
+            //         'notes' => string (0) ""
+            //     ]
+            // ]
+
+            // Set or delete the preset
+            if($probe['preset'] != "")
+            {
+                $setpreset = $this->get('api')->put("/grills/{$serialNumber}/probes/{$probeId}/preset", [
+                    'json' => ["presetId" => $probe['preset']],
+                    'http_errors' => false
+                ]);
+            }
+            else
+            {
+                $delpreset = $this->get('api')->delete("/grills/{$serialNumber}/probes/{$probeId}/preset", [
+                    'http_errors' => false
+                ]);
+            }
+
+            // Set or delete the timer
+            (int) $totaltime = ($probe['timer']['hours'] * 3600) + ($probe['timer']['minutes'] * 60);
+            
+            if($totaltime > 0)
+            {
+                $settimer = $this->get('api')->post("/grills/{$serialNumber}/probes/{$probeId}/timer", [
+                    'json' => [
+                        "duration" => $totaltime,
+                        "notes"    => $probe['timer']['notes']
+                    ],
+                    'http_errors' => false
+                ]);
+            }
+            else
+            {
+                $deltimer = $this->get('api')->delete("/grills/{$serialNumber}/probes/{$probeId}/timer", [
+                    'http_errors' => false
+                ]);
+            }
+        }
+        
         $this->get('flash')->addMessage('alert', [
             'type' => 'success', 
             'message' => 'Probe settings have been saved!'
