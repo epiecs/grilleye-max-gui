@@ -15,7 +15,7 @@ servers:
   - url: https://api-prod.hyperion.grilleye.com
     description: "LIVE"
   - url: https://cors.bridged.cc/https://api-prod.hyperion.grilleye.com
-    description: "CORS-PROXY"
+    description: "CORS-PROXY"                              
 
 tags:
 - name: devices
@@ -77,6 +77,13 @@ components:
       description: >
         The uuid of the preset you want to view or modify.
   
+  #*   ███████╗ ██████╗██╗  ██╗███████╗███╗   ███╗ █████╗ ███████╗
+  #*   ██╔════╝██╔════╝██║  ██║██╔════╝████╗ ████║██╔══██╗██╔════╝
+  #*   ███████╗██║     ███████║█████╗  ██╔████╔██║███████║███████╗
+  #*   ╚════██║██║     ██╔══██║██╔══╝  ██║╚██╔╝██║██╔══██║╚════██║
+  #*   ███████║╚██████╗██║  ██║███████╗██║ ╚═╝ ██║██║  ██║███████║
+  #*   ╚══════╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝                                                       
+
   schemas:
     ##
     # Models
@@ -251,7 +258,6 @@ components:
           items:
             type: object
             $ref:  "#/components/schemas/Event"
-
 
     SessionData:
       type: object
@@ -526,9 +532,14 @@ components:
             temperature: 92.5
 
 paths:
-  ##
-  #   Devices
-  ##
+
+  #* ██████╗ ███████╗██╗   ██╗██╗ ██████╗███████╗███████╗
+  #* ██╔══██╗██╔════╝██║   ██║██║██╔════╝██╔════╝██╔════╝
+  #* ██║  ██║█████╗  ██║   ██║██║██║     █████╗  ███████╗
+  #* ██║  ██║██╔══╝  ╚██╗ ██╔╝██║██║     ██╔══╝  ╚════██║
+  #* ██████╔╝███████╗ ╚████╔╝ ██║╚██████╗███████╗███████║
+  #* ╚═════╝ ╚══════╝  ╚═══╝  ╚═╝ ╚═════╝╚══════╝╚══════╝
+                                                    
   /grills:
     get:
       tags:
@@ -548,9 +559,13 @@ paths:
                 items:
                   $ref: '#/components/schemas/Grilleye'
 
-  ##
-  #   Temperatures
-  ##
+  #* ████████╗███████╗███╗   ███╗██████╗ ███████╗██████╗  █████╗ ████████╗██╗   ██╗██████╗ ███████╗███████╗
+  #* ╚══██╔══╝██╔════╝████╗ ████║██╔══██╗██╔════╝██╔══██╗██╔══██╗╚══██╔══╝██║   ██║██╔══██╗██╔════╝██╔════╝
+  #*    ██║   █████╗  ██╔████╔██║██████╔╝█████╗  ██████╔╝███████║   ██║   ██║   ██║██████╔╝█████╗  ███████╗
+  #*    ██║   ██╔══╝  ██║╚██╔╝██║██╔═══╝ ██╔══╝  ██╔══██╗██╔══██║   ██║   ██║   ██║██╔══██╗██╔══╝  ╚════██║
+  #*    ██║   ███████╗██║ ╚═╝ ██║██║     ███████╗██║  ██║██║  ██║   ██║   ╚██████╔╝██║  ██║███████╗███████║
+  #*    ╚═╝   ╚══════╝╚═╝     ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
+                                                                                                        
   /grills/{serialNumber}/probes:
     parameters:
       - $ref: '#/components/parameters/serialNumber'
@@ -626,9 +641,13 @@ paths:
                       nullable: true
                       example: 29.1
 
-  ##
-  #   Timers
-  ##
+  #* ████████╗██╗███╗   ███╗███████╗██████╗ ███████╗
+  #* ╚══██╔══╝██║████╗ ████║██╔════╝██╔══██╗██╔════╝
+  #*    ██║   ██║██╔████╔██║█████╗  ██████╔╝███████╗
+  #*    ██║   ██║██║╚██╔╝██║██╔══╝  ██╔══██╗╚════██║
+  #*    ██║   ██║██║ ╚═╝ ██║███████╗██║  ██║███████║
+  #*    ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
+                                                
   /grills/{serialNumber}/probes/{probeId}/timer:
     parameters:
       - $ref: '#/components/parameters/serialNumber'
@@ -719,12 +738,15 @@ paths:
                     example: Timer has already finished
                   requestId:
                     type: string
-                    example: 33f3cc99-1586404
-
-  ##
-  # Sessions
-  ##             
+                    example: 33f3cc99-1586404          
   
+  #* ███████╗███████╗███████╗███████╗██╗ ██████╗ ███╗   ██╗███████╗
+  #* ██╔════╝██╔════╝██╔════╝██╔════╝██║██╔═══██╗████╗  ██║██╔════╝
+  #* ███████╗█████╗  ███████╗███████╗██║██║   ██║██╔██╗ ██║███████╗
+  #* ╚════██║██╔══╝  ╚════██║╚════██║██║██║   ██║██║╚██╗██║╚════██║
+  #* ███████║███████╗███████║███████║██║╚██████╔╝██║ ╚████║███████║
+  #* ╚══════╝╚══════╝╚══════╝╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝                                                      
+
   /grills/{serialNumber}/sessions:
     parameters:
       - $ref: '#/components/parameters/serialNumber'
@@ -868,19 +890,53 @@ paths:
                   requestId:
                     type: string
                     example: 33f3cc99-1586404
-                    
-  /grills/{serialNumber}/sessions/current/finished-time:
-    parameters:
-      - $ref: '#/components/parameters/serialNumber'
     put:
       tags:
         - sessions
-      summary: End the current session
+      summary: Update the current session
       description: >
-        Ends the current session and returns all data and events.
+        Updates the current session and returns all data and events.
       requestBody:
         content:
-          application/json: {}
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  example: My current awesome grill session
+                probesIncluded:
+                  $ref:  "#/components/schemas/includedProbes"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                    format:  uuid
+                  name:
+                    type: string
+                    example: My current awesome grill session
+                  timeCreated:
+                    type: string
+                    format: date-time
+                  probesIncluded:
+                    $ref:  "#/components/schemas/includedProbes"
+
+  /grills/{serialNumber}/sessions/current/details:
+    parameters:
+      - $ref: '#/components/parameters/serialNumber'
+    get:
+      tags:
+        - sessions
+      summary: Current cooking session details
+      description: >
+        The current cooking session. Use the `/grills/{serialNumber}/probes` and \
+        `/grills/{serialNumber}/current` to get all the data for this the current 
+        session. The `graph` endpoint shows all data so you need to filter 
+        what is neccesary.
       responses:
         '200':
           description: OK
@@ -889,7 +945,36 @@ paths:
               schema:
                 allOf:
                   - $ref:  "#/components/schemas/Session"
-                  - $ref:  "#/components/schemas/SessionData"
+                properties:
+                  probesToMeatType:
+                    type: array
+                    items:
+                      $ref:  "#/components/schemas/probeToMeatType"
+        404:
+          description: No session found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+                    format: date-time
+                  path:
+                    type: string
+                    example: /grills/A1B2C3D4E5F6/sessions/current
+                  status:
+                    type: integer
+                    example: 404
+                  error:
+                    type: string
+                    example: Not found
+                  message:
+                    type: string
+                    example: Pending cooking session not found
+                  requestId:
+                    type: string
+                    example: 33f3cc99-1586404
 
   /grills/{serialNumber}/sessions/{sessionId}:
     parameters:
@@ -920,6 +1005,28 @@ paths:
                   - $ref:  "#/components/schemas/Session"
                   - $ref:  "#/components/schemas/SessionData"
 
+  /grills/{serialNumber}/sessions/current/finished-time:
+    parameters:
+      - $ref: '#/components/parameters/serialNumber'
+    put:
+      tags:
+        - sessions
+      summary: End the current session
+      description: >
+        Ends the current session and returns all data and events.
+      requestBody:
+        content:
+          application/json: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref:  "#/components/schemas/Session"
+                  - $ref:  "#/components/schemas/SessionData"
+
   /sessions/{sessionId}:
     delete:
       parameters:
@@ -938,10 +1045,13 @@ paths:
           description: OK
           content: {}
 
-  ##
-  #   Presets
-  ##
-
+  #* ██████╗ ██████╗ ███████╗███████╗███████╗████████╗███████╗
+  #* ██╔══██╗██╔══██╗██╔════╝██╔════╝██╔════╝╚══██╔══╝██╔════╝
+  #* ██████╔╝██████╔╝█████╗  ███████╗█████╗     ██║   ███████╗
+  #* ██╔═══╝ ██╔══██╗██╔══╝  ╚════██║██╔══╝     ██║   ╚════██║
+  #* ██║     ██║  ██║███████╗███████║███████╗   ██║   ███████║
+  #* ╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝   ╚═╝   ╚══════╝
+                                                         
   /phones/me/presets:
     get:
       tags:
@@ -1090,9 +1200,13 @@ paths:
                     nullable: true
                     example: null
 
-  ##
-  #   Settings
-  ##
+  #* ███████╗███████╗████████╗████████╗██╗███╗   ██╗ ██████╗ ███████╗
+  #* ██╔════╝██╔════╝╚══██╔══╝╚══██╔══╝██║████╗  ██║██╔════╝ ██╔════╝
+  #* ███████╗█████╗     ██║      ██║   ██║██╔██╗ ██║██║  ███╗███████╗
+  #* ╚════██║██╔══╝     ██║      ██║   ██║██║╚██╗██║██║   ██║╚════██║
+  #* ███████║███████╗   ██║      ██║   ██║██║ ╚████║╚██████╔╝███████║
+  #* ╚══════╝╚══════╝   ╚═╝      ╚═╝   ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚══════╝
+                                                                
   /phones/settings:
     get:
       tags:
@@ -1158,9 +1272,13 @@ paths:
                     type: string
                     example:  My fancy new Grilleye
 
-  ##
-  #   Logs
-  ##
+  #* ██╗      ██████╗  ██████╗ ███████╗
+  #* ██║     ██╔═══██╗██╔════╝ ██╔════╝
+  #* ██║     ██║   ██║██║  ███╗███████╗
+  #* ██║     ██║   ██║██║   ██║╚════██║
+  #* ███████╗╚██████╔╝╚██████╔╝███████║
+  #* ╚══════╝ ╚═════╝  ╚═════╝ ╚══════╝
+                                  
   /grills/{serialNumber}/profile:
     parameters:
       - $ref: '#/components/parameters/serialNumber'
