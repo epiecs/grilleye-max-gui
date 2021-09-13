@@ -3,8 +3,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 //TODO multiple grilleye support via dropdown in nav?
-//TODO add and remove probe from session and rename api endpoints
-//TODO start and stop session + details. find a way to include probes
+//TODO start and stop session + details.
 //TODO if session has started provide session graph on the dashboard under the live temperatures. Update every minute.
 //TODO make graph one reusable element and just push data where needed with js
 
@@ -87,7 +86,7 @@ $container->set('api', function ($container) {
             "accept-encoding" => "br;q=1.0, gzip;q=0.9, deflate;q=0.8",
             "phone-id"        => $container->get('settings')['phone-id'],
         ],
-        'timeout'  => 2.0,
+        'timeout'  => 5.0,
     ]);
 });
 
@@ -206,6 +205,12 @@ $app->get('/', function (Request $request, Response $response, $args) {
     $grill  = json_decode((string) $this->get('api')->get("/grills")->getBody(), true)[0];
     $apiProbes = json_decode((string) $this->get('api')->get("/grills/{$serialNumber}/probes")->getBody(), true);
     
+    try {
+        $session = json_decode((string) $this->get('api')->get("/grills/{$serialNumber}/sessions/current")->getBody(), true);
+    } catch (\Throwable $th) {
+        $session = [];
+    }
+
     $probes = [];
 
     foreach($apiProbes as $key => $probe)
@@ -219,10 +224,12 @@ $app->get('/', function (Request $request, Response $response, $args) {
     return $view->render($response, 'dashboard.twig', [
         'grill'    => $grill,
         'probes'   => $probes,
+        'session'  => $session,
         'settings' => $settings,
-        'colors'   => array_values($settings['probeColors'])
+        'colors'   => array_values($settings['probeColors']),
+        'alert'    => $this->get('flash')->getFirstMessage('alert')
     ]);
-});
+})->setName('dashboard');
 
 //*   ___            _             
 //*  / __| ___ _____(_)___ _ _  ___
@@ -319,7 +326,7 @@ $app->group('/sessions', function (RouteCollectorProxy $group) {
         $meatTypes    = $this->get('meatTypes');
         $eventTypes   = $this->get('eventTypes');
         $settings     = $this->get('settings');
-        
+
         $timezone     = new DateTimeZone($settings['timezone']);
 
         $session = json_decode((string) $this->get('api')->get("/grills/{$serialNumber}/sessions/{$args['sessionId']}")->getBody(), true);
@@ -384,6 +391,23 @@ $app->group('/sessions', function (RouteCollectorProxy $group) {
         ]);
     });
 
+
+    $group->post('/start', function (Request $request, Response $response, $args) {
+        
+        $serialNumber = $this->get('serialNumber');
+    
+        $grilleyeApi = $this->get('api')->post("/grills/{$serialNumber}/sessions", [
+            'http_errors' => false
+        ]);
+    
+        $this->get('flash')->addMessage('alert', [
+            'type' => 'success', 
+            'message' => 'Session started! Dont\'t forget to set a name and choose your included probes.'
+        ]);
+        
+        $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('dashboard');
+        return $response->withStatus(302)->withHeader('Location', $url);
+    });
 
     $group->post('/delete', function (Request $request, Response $response, $args) {
     
@@ -598,6 +622,62 @@ $app->map(['GET', 'POST'], '/settings', function (Request $request, Response $re
 })->setName('settings');
 
 
+//*   ____            _               
+//*  |  _ \ _ __ ___ | |__   ___  ___ 
+//*  | |_) | '__/ _ \| '_ \ / _ \/ __|
+//*  |  __/| | | (_) | |_) |  __/\__ \
+//*  |_|   |_|  \___/|_.__/ \___||___/
+                                  
+$app->map(['GET', 'POST'], '/probes/settings', function (Request $request, Response $response, $args) {
+
+    $settings     = $this->get('settings');
+    $serialNumber = $this->get('serialNumber');
+    $presets      = $this->get('presets');
+    $probes       = json_decode((string) $this->get('api')->get("/grills/{$serialNumber}/probes")->getBody(), true);
+
+    $timezone = new DateTimeZone($settings['timezone']);
+    $now = new DateTime("now");
+    $now->setTimezone($timezone);
+
+    if($request->getMethod() == 'POST')
+    {
+        $data = $request->getParsedBody();
+        s($data);
+        exit;
+     
+        $this->get('flash')->addMessage('alert', [
+            'type' => 'success', 
+            'message' => 'Probe settings have been saved!'
+        ]);
+
+        $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('dashboard');
+        return $response->withStatus(302)->withHeader('Location', $url);
+    }
+
+    foreach($probes as $key => $probe)
+    {
+        $probes[$key]['timer']['hours'] = false;
+        $probes[$key]['timer']['minutes'] = false;
+
+        if($probe['timer'])
+        {       
+            $endtime = strtotime($probe['timer']['timeCreated']) + $probe['timer']['duration'];
+
+            $timeleft = $endtime - $now->getTimeStamp();
+
+            $probes[$key]['timer']['hours'] = (int) ($timeleft - ($timeleft % 3600)) / 3600;
+            $probes[$key]['timer']['minutes'] = (int)round(($timeleft % 3600) / 60);
+        }
+    }
+
+    $view = Twig::fromRequest($request);
+    return $view->render($response, 'probesettings.twig', [
+        'sortedpresets' => $this->get('presets'),
+        'probes'        => $probes,
+    ]);
+
+})->setName('settings');                                                
+
 //*   █████╗ ██████╗ ██╗
 //*  ██╔══██╗██╔══██╗██║
 //*  ███████║██████╔╝██║
@@ -621,6 +701,12 @@ $app->group('/api', function (RouteCollectorProxy $group) {
         $grill     = json_decode((string) $this->get('api')->get("/grills")->getBody(), true)[0];
         $apiProbes = json_decode((string) $this->get('api')->get("/grills/{$serialNumber}/probes")->getBody(), true);
         
+        try {
+            $data['session']   = json_decode((string) $this->get('api')->get("/grills/{$serialNumber}/sessions/current")->getBody(), true);
+        } catch (\Throwable $th) {
+            $data['session'] = [];
+        }
+
         unset($grill['probeData']);
 
         $data['grill'] = $grill;

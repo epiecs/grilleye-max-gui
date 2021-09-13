@@ -110,26 +110,14 @@
             </div>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="modal-{{session.id}}" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="ModalLabel">Are you sure?</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <form method="post" action="/sessions/delete">
-                            <button type="submit" class="btn btn-sm btn-danger" role="button" name="sessionId" value="{{ session.id }}">
-                                Yes, delete
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Modal -->
+        {% include 'elements/delete-modal.twig' with {
+            'modal': {
+                'id'    : session.id,
+                'action': "/sessions/delete",
+                'name'  : "sessionId",
+                'value' : session.id,
+            }
+        } %}
 
     {% endfor %}
 </div>

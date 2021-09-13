@@ -5,54 +5,31 @@
     <h2>Dashboard</h2>
 </div>
 
-<div class="row row-cols-2 row-cols-md-2 g-2">
-    <div class="col">
-        <div class="card text-white bg-secondary">
-            <div class="card-body py-2 px-3">
-                <div class="row row-cols-1 row-cols-md-2">
-                    <div class="col">
-                        <div class="col">
-                            <h5 id="grill-name">{{ grill.name }}</h5>
-                        </div>
-                        <div class="col">
-                            <span class="badge bg-success" id="grill-battery">Battery: <span>{{ grill.battery }}</span>%</span>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="col probe-info" id="grill-serialnumber">
-                            {{ grill.serialNumber }}
-                        </div>
-                        <div class="col probe-info" id="grill-firmware">
-                            Firmware {{ grill.firmwareVersion }}
-                        </div>
-                        <div class="col probe-info">
-                            <span class="badge bg-success" id="grill-connected">Connected</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="row">
+
+    <div class="col-9">
+        <h5 id="grill-name">{{ grill.name }}</h5>
+        <!-- <small class="col-12 probe-info" id="grill-serialnumber">
+            Serial: {{ grill.serialNumber }}
+        </small>
+        <small class="col-12 probe-info" id="grill-firmware">
+            Firmware: {{ grill.firmwareVersion }}
+        </small> -->
     </div>
-    <div class="col">
-        Start/stop session
-        <!-- <div class="card">
-            <div class="card-body">
-                <div class="row row-cols-1 row-cols-md-2">
-                    <div class="col">
-                        <div class="col">
-                            <h5>Profile</h5>
-                        </div>
-                    </div>
-                    <div class="col">
-                    </div>
-                </div>
-            </div>
-        </div> -->
+
+    <div class="col-3 text-end">
+        <span class="badge bg-success" id="grill-battery">Battery: <span>{{ grill.battery }}</span>%</span>
+        <span class="badge bg-success" id="grill-connected">Connected</span>
     </div>
 </div>
 
 <div class="row pt-3">
-    <h3>Probes</h3>
+    <div class="col col-9">
+        <h3>Probes</h3>
+    </div>
+    <div class="col col-3 text-end">
+        <a href="/probes/settings" class="btn btn-sm btn-primary"><span class="align-middle">Probe Settings</span> <i class="bi bi-gear align-middle"></i></a>
+    </div>
 </div>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-2">
     {% for probe in probes %}
@@ -73,6 +50,38 @@
     </div>
 </div>
 
+<div class="row pt-3">
+    <div class="col col-9">
+        <h3>Session</h3>
+    </div>
+    <div class="col col-3 text-end">
+        {% if session %}
+            <a href="/session/settings" class="btn btn-sm btn-primary"><span class="align-middle">Session Settings</span> <i class="bi bi-gear align-middle"></i></a>
+        {% endif %}
+    </div>
+</div>
+<div class="row py-2">
+    {% if not session %}
+        <div class="row">
+            <div class="col">
+                <form method="post" action="/sessions/start">
+                    <button type="submit" class="btn btn-sm btn-primary">Start new session</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+
+<!-- TODO Fix modal for end session, maybe add the delete button text as well with a default -->
+{% include 'elements/delete-modal.twig' with {
+    'modal': {
+        'id'    : 'endsession',
+        'action': "/sessions/end",
+        'name'  : "endsession",
+        'value' : "",
+    }
+} %}
 {% endblock %}
 
 {% block scripts %}

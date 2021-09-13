@@ -175,7 +175,7 @@
     <div class="row mb-3">
         <label for="unitOfMeassure" class="col-sm-2 col-form-label">Units of measurement</label>
         <div class="col-sm-10">
-            <select class="form-select" id="unitOfMeassure" name="grilleyesettings[unitOfMeassure]" {{ disabled }}>
+            <select class="form-select" id="unitOfMeassure" name="[unitOfMeassure]" {{ disabled }}>
                 <option value="CELSIUS" {% if grilleyesettings.unitOfMeassure == 'CELSIUS' %} selected="selected"{% endif %}>Celcius</option>
                 <option value="FAHRENHEIT" {% if grilleyesettings.unitOfMeassure == 'FAHRENHEIT' %} selected="selected"{% endif %}>Fahrenheit</option>
             </select>
@@ -185,7 +185,7 @@
     <div class="row mb-3">
         <label for="alarmVolume" class="col-sm-2 col-form-label">Alarm volume</label>
         <div class="col-sm-10">
-            <select class="form-select" id="alarmVolume" name="grilleyesettings[alarmVolume]" {{ disabled }}>
+            <select class="form-select" id="alarmVolume" name="[alarmVolume]" {{ disabled }}>
                 <option value="0" {% if grilleyesettings.alarmVolume == 0 %} selected="selected"{% endif %}>0%</option>
                 <option value="0.5" {% if grilleyesettings.alarmVolume == 0.5 %} selected="selected"{% endif %}>50%</option>
                 <option value="1" {% if grilleyesettings.alarmVolume == 1 %} selected="selected"{% endif %}>100%</option>
@@ -199,7 +199,7 @@
     <div class="row mb-3">
         <label for="timeFormat" class="col-sm-2 col-form-label">Time format</label>
         <div class="col-sm-10">
-            <select class="form-select" id="timeFormat" name="grilleyesettings[timeFormat]" {{ disabled }}>
+            <select class="form-select" id="timeFormat" name="[timeFormat]" {{ disabled }}>
                 <option value="TWENTY_FOUR_HOURS" {% if grilleyesettings.timeFormat == 'TWENTY_FOUR_HOURS' %} selected="selected"{% endif %}>24 hours</option>
                 <option value="TWELVE_HOURS" {% if grilleyesettings.timeFormat == 'TWELVE_HOURS' %} selected="selected"{% endif %}>12 hours</option>
             </select>
@@ -209,7 +209,7 @@
     <div class="row mb-3">
         <label for="earlyAlarmDegrees" class="col-sm-2 col-form-label">Early alarm</label>
         <div class="col-sm-10">
-            <select class="form-select" id="earlyAlarmDegrees" name="grilleyesettings[earlyAlarmDegrees]" {{ disabled }}>
+            <select class="form-select" id="earlyAlarmDegrees" name="[earlyAlarmDegrees]" {{ disabled }}>
                 <option value="0" {% if grilleyesettings.earlyAlarmDegrees == 0 %} selected="selected"{% endif %}>No early warning</option>
                 <option value="3" {% if grilleyesettings.earlyAlarmDegrees == 3 %} selected="selected"{% endif %}>5 °C / 37 °F </option>
                 <option value="5" {% if grilleyesettings.earlyAlarmDegrees == 5 %} selected="selected"{% endif %}>5 °C / 41 °F</option>
@@ -224,7 +224,7 @@
     <div class="row mb-3">
         <label for="screenSavingTime" class="col-sm-2 col-form-label">Screen-saving time</label>
         <div class="col-sm-10">
-            <select class="form-select" id="screenSavingTime" name="grilleyesettings[screenSavingTime]" {{ disabled }}>
+            <select class="form-select" id="screenSavingTime" name="[screenSavingTime]" {{ disabled }}>
                 <option value="0" {% if grilleyesettings.screenSavingTime == 0 %} selected="selected"{% endif %}>No dimming</option>
                 <option value="180" {% if grilleyesettings.screenSavingTime == 180 %} selected="selected"{% endif %}>3 minutes</option>
                 <option value="300" {% if grilleyesettings.screenSavingTime == 300 %} selected="selected"{% endif %}>5 minutes</option>
@@ -239,7 +239,7 @@
     <div class="row mb-3">
         <label for="autoShutdownTime" class="col-sm-2 col-form-label">Auto shut-down time</label>
         <div class="col-sm-10">
-            <select class="form-select" id="autoShutdownTime" name="grilleyesettings[autoShutdownTime]" {{ disabled }}>
+            <select class="form-select" id="autoShutdownTime" name="[autoShutdownTime]" {{ disabled }}>
                 <option value="0" {% if grilleyesettings.autoShutdownTime == 0 %} selected="selected"{% endif %}>No dimming</option>
                 <option value="180" {% if grilleyesettings.autoShutdownTime == 180 %} selected="selected"{% endif %}>3 minutes</option>
                 <option value="300" {% if grilleyesettings.autoShutdownTime == 300 %} selected="selected"{% endif %}>5 minutes</option>
@@ -254,7 +254,7 @@
     <div class="row mb-3">
         <label for="coolDownTime" class="col-sm-2 col-form-label">Cool down time</label>
         <div class="col-sm-10">
-            <select class="form-select" id="coolDownTime" name="grilleyesettings[coolDownTime]" {{ disabled }}>
+            <select class="form-select" id="coolDownTime" name="[coolDownTime]" {{ disabled }}>
                 <option value="60" {% if grilleyesettings.coolDownTime == 0 %} selected="selected"{% endif %}>1 minute</option>
                 <option value="300" {% if grilleyesettings.coolDownTime == 300 %} selected="selected"{% endif %}>5 minutes</option>
                 <option value="600" {% if grilleyesettings.coolDownTime == 600 %} selected="selected"{% endif %}>10 minutes</option>
@@ -273,7 +273,7 @@
         <label for="alarmOnDisconnect" class="col-sm-2 col-form-label">Alarm on disconnection</label>
         <div class="col-sm-10">
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="alarmOnDisconnect" name="grilleyesettings[alarmOnDisconnect]" {% if grilleyesettings.alarmOnDisconnect %} checked{% endif %} {{ disabled }}>
+                <input class="form-check-input" type="checkbox" id="alarmOnDisconnect" name="[alarmOnDisconnect]" {% if grilleyesettings.alarmOnDisconnect %} checked{% endif %} {{ disabled }}>
             </div>
             <div id="alarmOnDisconnectHelp" class="form-text">
                 Receive an alarm when your Grilleye disconnects from wifi.
@@ -285,7 +285,7 @@
         <label for="notificationSound" class="col-sm-2 col-form-label">Audible notification</label>
         <div class="col-sm-10">
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="notificationSound" name="grilleyesettings[notificationSound]" {% if grilleyesettings.notificationSound %} checked{% endif %} {{ disabled }}>
+                <input class="form-check-input" type="checkbox" id="notificationSound" name="[notificationSound]" {% if grilleyesettings.notificationSound %} checked{% endif %} {{ disabled }}>
             </div>
             <div id="notificationSoundHelp" class="form-text">
                 Enable or disable the beeper on the Grilleye unit.
