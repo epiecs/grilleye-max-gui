@@ -10,7 +10,7 @@
                 <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <form method="post" action="{{ modal.action }}">
                     <button type="submit" class="btn btn-sm btn-danger" role="button" name="{{ modal.name }}" value="{{ modal.value }}">
-                        Yes, delete
+                        {{ modal.buttontext | default("Yes, delete")}}
                     </button>
                 </form>
             </div>

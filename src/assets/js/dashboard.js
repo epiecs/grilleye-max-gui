@@ -19,6 +19,7 @@ window.addEventListener('load', function () {
                 await new Promise(resolve => setTimeout(resolve, 2000));
                 await initializeLiveTemperatures();
             }
+            console.log(liveTemperatures);
             chart.updateSeries(liveTemperatures);
 
             //TODO remove this and clip all the old data using js. Find out a way to use the livetemperatures value?
@@ -44,6 +45,8 @@ window.addEventListener('load', function () {
                 await new Promise(resolve => setTimeout(resolve, 2000));
                 await getGrill();
             }
+
+            console.log(grillData);
             //GRILL
 
             //Name

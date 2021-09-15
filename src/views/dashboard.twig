@@ -72,14 +72,13 @@
     {% endif %}
 </div> -->
 
-
-<!-- TODO Fix modal for end session, maybe add the delete button text as well with a default -->
 {% include 'elements/delete-modal.twig' with {
     'modal': {
-        'id'    : 'endsession',
-        'action': "/sessions/end",
-        'name'  : "endsession",
-        'value' : "",
+        'id'        : 'endsession',
+        'action'    : "/sessions/end",
+        'name'      : "endsession",
+        'value'     : "",
+        'buttontext': "End session",
     }
 } %}
 {% endblock %}

@@ -10,6 +10,8 @@ error_reporting(E_ALL);
 //TODO delete session button on view session page
 //TODO clean up index php and start working with namespaces.
 
+//TODO after session has started provide a stop session button and an edit session button
+
 use DI\Container;
 
 use Psr\Http\Message\ResponseInterface as Response;
