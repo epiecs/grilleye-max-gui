@@ -10,7 +10,7 @@ error_reporting(E_ALL);
 //TODO delete session button on view session page
 //TODO clean up index php and start working with namespaces.
 
-//TODO after session has started provide a stop session button and an edit session button
+//TODO provide a edit session button
 
 use DI\Container;
 
@@ -203,6 +203,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
     $serialNumber    = $this->get('serialNumber');
     $settings        = $this->get('settings');
     $temperatureUnit = $this->get('temperatureUnit');
+    $timezone        = new DateTimeZone($settings['timezone']);
 
     $grill  = json_decode((string) $this->get('api')->get("/grills")->getBody(), true)[0];
     $apiProbes = json_decode((string) $this->get('api')->get("/grills/{$serialNumber}/probes")->getBody(), true);
@@ -210,7 +211,17 @@ $app->get('/', function (Request $request, Response $response, $args) {
     try {
         $session = json_decode((string) $this->get('api')->get("/grills/{$serialNumber}/sessions/current")->getBody(), true);
     } catch (\Throwable $th) {
-        $session = [];
+        $session = false;
+    }
+
+    if($session)
+    {
+        $session['colors'] = [];
+
+        foreach($session['probesIncluded'] as $probeIndex)
+        {
+            $session['colors'][] = $settings['probeColors'][$probeIndex + 1];
+        }
     }
 
     $probes = [];
@@ -405,6 +416,23 @@ $app->group('/sessions', function (RouteCollectorProxy $group) {
         $this->get('flash')->addMessage('alert', [
             'type' => 'success', 
             'message' => 'Session started! Dont\'t forget to set a name and choose your included probes.'
+        ]);
+        
+        $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('dashboard');
+        return $response->withStatus(302)->withHeader('Location', $url);
+    });
+
+    $group->post('/stop', function (Request $request, Response $response, $args) {
+        
+        $serialNumber = $this->get('serialNumber');
+    
+        $grilleyeApi = $this->get('api')->put("/grills/{$serialNumber}/sessions/current/finished-time", [
+            'http_errors' => false
+        ]);
+    
+        $this->get('flash')->addMessage('alert', [
+            'type' => 'success', 
+            'message' => 'Session stopped!.'
         ]);
         
         $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('dashboard');
@@ -881,6 +909,71 @@ $app->group('/api', function (RouteCollectorProxy $group) {
                         'y' => $reading['temperature'],
                     ];
                 }
+            }
+
+            $temperatures[$apiTemperature['probeIndex']] = [
+                "name" => "Probe " . ($apiTemperature['probeIndex'] + 1),
+                'data' => $probeTemperatures
+            ];
+        }
+
+        sort($temperatures);
+
+        $response->getBody()->write(json_encode(array_values($temperatures)));
+        return $response
+            ->withHeader('Content-Type', 'application/json');   
+    });
+
+    $group->get('/probes/currentsession', function ($request, $response, array $args) {
+
+        $serialNumber    = $this->get('serialNumber');
+        $settings        = $this->get('settings');
+        $temperatureUnit = $this->get('temperatureUnit');
+
+        $timezone = new DateTimeZone($settings['timezone']);
+        $now = new DateTime("now");
+        $now->setTimezone($timezone);
+
+        //TODO set session colors in dashboard since we always will have a refresh or in seperate array val?
+
+        $session = json_decode((string) $this->get('api')->get("/grills/{$serialNumber}/sessions/current", ['timeout' => 10.0])->getBody(), true);
+        
+        $sessionStart = new DateTime($session['timeCreated']);
+        $sessionStart->setTimezone($timezone);
+
+        /*
+            The maximum time back in minutes when the session started. Since we have an array with a value per 
+            minute we can do a quick slice without having to compare all the dates since we need a reading anyway 
+            for each minute since the session started.
+        */
+
+        $maxHistory = (int) (($now->getTimestamp() - $sessionStart->getTimestamp()) / 60);
+
+        $apiTemperatures = json_decode($this->get('api')->get("/grills/{$serialNumber}/graphs", ['timeout' => 10.0])->getBody(), true);
+
+        $temperatures = [];
+        
+        foreach ($apiTemperatures as $apiTemperature) 
+        {
+            if(!in_array($apiTemperature['probeIndex'], $session['probesIncluded']))
+            {
+                //If the probe is not included in the session just continue. No need to wast precious cycles
+                continue;
+            }
+
+            $lastTemperatures = array_slice($apiTemperature['graphData'], $maxHistory * -1, $maxHistory);
+            
+            $probeTemperatures = [];
+
+            foreach ($lastTemperatures as $reading) 
+            {
+                $timestamp = new DateTime($reading['timestamp']);
+                $timestamp->setTimezone($timezone);
+                
+                $probeTemperatures[] = [
+                    'x' => $timestamp->format(DATE_ATOM),
+                    'y' => $reading['temperature'],
+                ];
             }
 
             $temperatures[$apiTemperature['probeIndex']] = [

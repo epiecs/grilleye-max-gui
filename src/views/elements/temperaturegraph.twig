@@ -36,7 +36,7 @@
                 size: 0,
             },
             title: {
-                text: "{{ graph.title }}",
+                text: "{{ graph.title | default("temperatures")}}",
                 align: 'left'
             },
             xaxis: {
@@ -67,8 +67,8 @@
             }
         };
 
-        chart = new ApexCharts(document.querySelector("#{{ graph.id }}"), options);
-        chart.render();
+        {{ graph.chartvar | default("chart") }} = new ApexCharts(document.querySelector("#{{ graph.id }}"), options);
+        {{ graph.chartvar | default("chart") }}.render();
 
     });
 

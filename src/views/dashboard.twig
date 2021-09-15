@@ -40,26 +40,40 @@
 	<div class="col">
 		{% include 'elements/temperaturegraph.twig' with {
 			'graph': {
-				'id'    : 'livetemperatures',
-				'title' : "Live temperatures - Last " ~ settings.liveMinutes ~ " minutes - aggregates every minute",
-				'colors': colors,
+				'id'      : 'livetemperatures',
+				'chartvar': 'livechart',
+				'title'   : "Live temperatures - Last " ~ settings.liveMinutes ~ " minutes - aggregates every minute",
+				'colors'  : colors,
 			}
 		} %}
     </div>
 </div>
 
 <div class="row pt-3">
-    <div class="col col-9">
+    <div class="col col-8">
         <h3>Session</h3>
     </div>
-    <div class="col col-3 text-end">
+    <div class="col col-4 text-end">
         {% if session %}
             <a href="/session/settings" class="btn btn-sm btn-primary"><span class="align-middle">Session Settings</span> <i class="bi bi-gear align-middle"></i></a>
+
+            <button class="btn btn-sm btn-danger" role="button" data-bs-toggle="modal" data-bs-target="#modal-endsession">
+                <span class="align-middle">Stop session</span> <i class="bi bi-stop-circle align-middle"></i>
+            </button>
         {% endif %}
     </div>
 </div>
 <div class="row py-2">
-    {% if not session %}
+    {% if session %}
+        {% include 'elements/temperaturegraph.twig' with {
+            'graph': {
+                'id'      : 'currentsession',
+                'chartvar': 'sessionchart',
+                'title'   : "Current session",
+                'colors'  : session.colors,
+            }
+        } %}
+    {% else %}
         <div class="row">
             <div class="col">
                 <form method="post" action="/sessions/start">
@@ -73,10 +87,10 @@
 {% include 'elements/delete-modal.twig' with {
     'modal': {
         'id'        : 'endsession',
-        'action'    : "/sessions/end",
+        'action'    : "/sessions/stop",
         'name'      : "endsession",
         'value'     : "",
-        'buttontext': "End session",
+        'buttontext': "Yes, I'm sure'",
     }
 } %}
 {% endblock %}

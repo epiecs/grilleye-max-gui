@@ -1,4 +1,5 @@
-var chart;
+var livechart;
+var sessionchart;
 var liveTemperatures = [];
 
 window.addEventListener('load', function () {
@@ -19,16 +20,41 @@ window.addEventListener('load', function () {
                 await new Promise(resolve => setTimeout(resolve, 2000));
                 await initializeLiveTemperatures();
             }
-            chart.updateSeries(liveTemperatures);
 
-            //TODO remove this and clip all the old data using js. Find out a way to use the livetemperatures value?
+            livechart.updateSeries(liveTemperatures);
+
             //Refresh all data every minute to prevent memory leaks
             await new Promise(resolve => setTimeout(resolve, 60000));
             await initializeLiveTemperatures();
         }
     };
+    
+    async function getSessionSeries() {
 
-    async function getGrill() {
+        let response = await fetch('/api/probes/currentsession', {
+            cache: 'no-cache'
+        });
+
+        if(response.ok)
+        {
+            try {
+                sessionTemperatures = JSON.parse(await response.text());
+            }
+            catch (error) {
+                //Sometimes the hyperion API times out. This catches the error and waits 2 seconds before trying again
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                await getSessionSeries();
+            }
+
+            sessionchart.updateSeries(sessionTemperatures);
+
+            //Refresh all data every minute to prevent memory leaks
+            await new Promise(resolve => setTimeout(resolve, 60000));
+            await getSessionSeries();
+        }
+    };
+
+    async function getGrillSeries() {
 
         let response = await fetch('/api/grill', {
             cache: 'no-cache'
@@ -42,7 +68,7 @@ window.addEventListener('load', function () {
             catch (error) {
                 //Sometimes the hyperion API times out. This catches the error and waits 2 seconds before trying again
                 await new Promise(resolve => setTimeout(resolve, 2000));
-                await getGrill();
+                await getGrillSeries();
             }
 
             //GRILL
@@ -94,11 +120,11 @@ window.addEventListener('load', function () {
                 }
             });
 
-            chart.updateSeries(liveTemperatures);
+            livechart.updateSeries(liveTemperatures);
         }
 
         await new Promise(resolve => setTimeout(resolve, 1000));
-        await getGrill();
+        await getGrillSeries();
     };
 
     //Grill element selectors
@@ -121,5 +147,6 @@ window.addEventListener('load', function () {
 
     // Start
     initializeLiveTemperatures();
-    getGrill();
+    getSessionSeries();
+    getGrillSeries();
 });
