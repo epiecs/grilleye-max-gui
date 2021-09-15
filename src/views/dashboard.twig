@@ -38,19 +38,17 @@
 </div>
 <div class="row py-2">
 	<div class="col">
-		{% include 'elements/livetemperaturegraph.twig' with {
-			'chart': {
+		{% include 'elements/temperaturegraph.twig' with {
+			'graph': {
 				'id'    : 'livetemperatures',
 				'title' : "Live temperatures - Last " ~ settings.liveMinutes ~ " minutes - aggregates every minute",
-				'height': 350,
-				'data'  : temperatures,
 				'colors': colors,
 			}
 		} %}
     </div>
 </div>
 
-<!-- <div class="row pt-3">
+<div class="row pt-3">
     <div class="col col-9">
         <h3>Session</h3>
     </div>
@@ -70,7 +68,7 @@
             </div>
         </div>
     {% endif %}
-</div> -->
+</div>
 
 {% include 'elements/delete-modal.twig' with {
     'modal': {

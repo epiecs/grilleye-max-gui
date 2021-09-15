@@ -1,0 +1,75 @@
+<div id="{{ graph.id }}"></div>
+
+{% if graph.series %}
+    {% set series = graph.series %}
+{% else %}
+    {% set series = [] %}
+{% endif %}
+
+<script type="text/javascript">
+
+    window.addEventListener('load', function () {
+        
+        let options = {
+            series: {{ series|json_encode|raw }},
+            chart: {
+                type: 'line',
+                stacked: false,
+                height: {{ graph.height | default(350)}},
+                zoom: {
+                    type: 'x',
+                    enabled: true,
+                    autoScaleYaxis: true
+                },
+                animations: {
+                    enabled: false,
+                    easing: 'linear',
+                    dynamicAnimation: {
+                        speed: 1000
+                    }
+                },
+            },
+            dataLabels: {
+                enabled: false
+            },
+            markers: {
+                size: 0,
+            },
+            title: {
+                text: "{{ graph.title }}",
+                align: 'left'
+            },
+            xaxis: {
+                type: 'datetime',
+                labels: {
+                    formatter: function (timestamp, value) {
+                        return moment(timestamp).format("HH:mm");
+                    },
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Temperature'
+                },
+                min: 0
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 2
+            },
+            colors: {{graph.colors|json_encode|raw}},
+            noData: {
+                text: 'Loading...'
+            },
+            tooltip: {
+                fillSeriesColor: true,
+                shared: false
+            }
+        };
+
+        chart = new ApexCharts(document.querySelector("#{{ graph.id }}"), options);
+        chart.render();
+
+    });
+
+</script>

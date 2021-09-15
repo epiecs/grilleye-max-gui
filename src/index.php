@@ -383,7 +383,7 @@ $app->group('/sessions', function (RouteCollectorProxy $group) {
         $colors = array_values($colors);
         
         $view = Twig::fromRequest($request);
-        
+
         return $view->render($response, 'session.twig', [
             'session'         => $session,
             'meatTypes'       => $meatTypes,
