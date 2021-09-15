@@ -40,11 +40,11 @@ docker-compose up -d
 You can also install this on your own webserver and make the src directory the entrypoint.
 
 ## Roadmap
-- Start a new session from the dashboard and have an extra graph
 - Pagination when using sessions
-- Finish and polish mostly in the livegraph
-- Map the endpoints for session management such as adding and removing probes
+- Manage the current session
 - Support for multiple grilleye's? 
+- Finish and polish mostly in the livegraph
+- Show max temp or range on chart (maybe too much with 8 probes?)
 
 ## Develop your own app using the api
 If you want to develop your own application you can use the openapi.yml or the postman.json file to browse and test the api. The postman.json contains a collection with variables where you can enter your phone-id and serial number.

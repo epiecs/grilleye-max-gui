@@ -3,12 +3,13 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 //TODO multiple grilleye support via dropdown in nav?
-//TODO start and stop session + details.
-//TODO if session has started provide session graph on the dashboard under the live temperatures. Update every minute.
-//TODO make graph one reusable element and just push data where needed with js
 
 //TODO delete session button on view session page
 //TODO clean up index php and start working with namespaces.
+
+//TODO button to choose refresh every 1-5-10 seconds?
+//TODO show max temp or temp range on chart?
+//TODO click through on probe to show only that probe?
 
 //TODO provide a edit session button
 
@@ -296,7 +297,7 @@ $app->group('/sessions', function (RouteCollectorProxy $group) {
 
         $view = Twig::fromRequest($request);
         
-        //TODO Paging
+        //TODO Pagination
 
         return $view->render($response, 'sessions.twig', [
             'filters'         => $filters,
@@ -933,8 +934,6 @@ $app->group('/api', function (RouteCollectorProxy $group) {
         $timezone = new DateTimeZone($settings['timezone']);
         $now = new DateTime("now");
         $now->setTimezone($timezone);
-
-        //TODO set session colors in dashboard since we always will have a refresh or in seperate array val?
 
         $session = json_decode((string) $this->get('api')->get("/grills/{$serialNumber}/sessions/current", ['timeout' => 10.0])->getBody(), true);
         
