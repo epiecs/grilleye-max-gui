@@ -17,6 +17,13 @@ This only works for GrillEye Max devices. You can find a store to buy one on the
     - [Windows](#windows)
     - [Mac/Linux](#maclinux)
   - [Screenshots](#screenshots)
+    - [Dashboard](#dashboard)
+    - [Probe settings](#probe-settings)
+    - [Presets](#presets)
+    - [Preset](#preset)
+    - [Sessions](#sessions)
+    - [Session](#session)
+    - [Local and GrillEye settings](#local-and-grilleye-settings)
   - [Disclaimer](#disclaimer)
 
 ## Why
@@ -107,9 +114,19 @@ On a Mac or Linux system, you can do `screen /dev/tty.usbserial-1460 115200` and
 
 ## Screenshots
 
+### Dashboard
 ![gui-dashboard](docs/screenshots/gui-dashboard.png)
+### Probe settings
+![gui-probesettings](docs/screenshots/gui-probesettings.png)
+### Presets
+![gui-preset](docs/screenshots/gui-presets.png)
+### Preset
 ![gui-preset](docs/screenshots/gui-preset.png)
+### Sessions
+![gui-session](docs/screenshots/gui-sessions.png)
+### Session
 ![gui-session](docs/screenshots/gui-session.png)
+### Local and GrillEye settings
 ![gui-settings](docs/screenshots/gui-settings.png)
 
 ## Disclaimer
