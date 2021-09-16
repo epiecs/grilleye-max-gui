@@ -55,7 +55,7 @@
     </div>
     <div class="col col-4 text-end">
         {% if session %}
-            <a href="/session/settings" class="btn btn-sm btn-primary"><span class="align-middle">Session Settings</span> <i class="bi bi-gear align-middle"></i></a>
+            <a href="/sessions/current/settings" class="btn btn-sm btn-primary"><span class="align-middle">Session Settings</span> <i class="bi bi-gear align-middle"></i></a>
 
             <button class="btn btn-sm btn-danger" role="button" data-bs-toggle="modal" data-bs-target="#modal-endsession">
                 <span class="align-middle">Stop session</span> <i class="bi bi-stop-circle align-middle"></i>
@@ -65,11 +65,13 @@
 </div>
 <div class="row py-2">
     {% if session %}
+
+
         {% include 'elements/temperaturegraph.twig' with {
             'graph': {
                 'id'      : 'currentsession',
                 'chartvar': 'sessionchart',
-                'title'   : "Current session",
+                'title'   : session.name|default("Current session"),
                 'colors'  : session.colors,
             }
         } %}

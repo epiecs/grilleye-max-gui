@@ -4,7 +4,6 @@ error_reporting(E_ALL);
 
 //TODO multiple grilleye support via dropdown in nav?
 
-//TODO delete session button on view session page
 //TODO clean up index php and start working with namespaces.
 
 //TODO button to choose refresh every 1-5-10 seconds?
@@ -334,6 +333,102 @@ $app->group('/sessions', function (RouteCollectorProxy $group) {
             ->withHeader('Content-Disposition', 'attachment; filename=grilleye-graph.csv');
     });
 
+    $group->post('/start', function (Request $request, Response $response, $args) {
+        
+        $serialNumber = $this->get('serialNumber');
+    
+        $grilleyeApi = $this->get('api')->post("/grills/{$serialNumber}/sessions", [
+            'http_errors' => false
+        ]);
+    
+        $this->get('flash')->addMessage('alert', [
+            'type' => 'success', 
+            'message' => 'Session started! Dont\'t forget to set a name and choose your included probes.'
+        ]);
+        
+        $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('dashboard');
+        return $response->withStatus(302)->withHeader('Location', $url);
+    });
+
+    $group->post('/stop', function (Request $request, Response $response, $args) {
+        
+        $serialNumber = $this->get('serialNumber');
+    
+        $grilleyeApi = $this->get('api')->put("/grills/{$serialNumber}/sessions/current/finished-time", [
+            'http_errors' => false
+        ]);
+    
+        $this->get('flash')->addMessage('alert', [
+            'type' => 'success', 
+            'message' => 'Session stopped!.'
+        ]);
+        
+        $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('dashboard');
+        return $response->withStatus(302)->withHeader('Location', $url);
+    });
+
+    $group->map(['GET', 'POST'], '/current/settings', function (Request $request, Response $response, $args) {
+  
+        $serialNumber = $this->get('serialNumber');
+    
+        $session = json_decode((string) $this->get('api')->get("/grills/{$serialNumber}/sessions/current")->getBody(), true);
+
+        if($request->getMethod() == 'POST')
+        {
+            $data = $request->getParsedBody();
+
+            $grilleyeApi = $this->get('api')->put("/grills/{$serialNumber}/sessions/current", [
+                'json' => [
+                    "name" => $data['sessionName'],
+                    "probesIncluded" => array_keys($data['includedprobes'])
+                ],
+                'http_errors' => false
+            ]);
+
+            $this->get('flash')->addMessage('alert', [
+                'type' => 'success', 
+                'message' => 'Session settings have been saved.'
+            ]);
+
+            $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('dashboard');
+            return $response->withStatus(302)->withHeader('Location', $url);
+        }
+
+
+        $view = Twig::fromRequest($request);
+
+        return $view->render($response, 'currentsession.twig', [
+            'session'    => $session,
+        ]);
+    });
+
+    $group->post('/delete', function (Request $request, Response $response, $args) {
+    
+        $data = $request->getParsedBody();
+    
+        $grilleyeApi = $this->get('api')->delete("/sessions/{$data['sessionId']}", [
+            'http_errors' => false
+        ]);
+    
+        if($grilleyeApi->getStatusCode() != 200)
+        {
+            $this->get('flash')->addMessage('alert', [
+                'type' => 'danger',
+                'message' => 'Session could not be deleted'
+            ]);
+        }
+        else
+        {
+            $this->get('flash')->addMessage('alert', [
+                'type' => 'success', 
+                'message' => 'Session has been deleted'
+            ]);
+        }
+        
+        $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('sessions');
+        return $response->withStatus(302)->withHeader('Location', $url);
+    });
+
     $group->get('/{sessionId}', function (Request $request, Response $response, $args) {
 
         $serialNumber = $this->get('serialNumber');
@@ -403,68 +498,6 @@ $app->group('/sessions', function (RouteCollectorProxy $group) {
             'temperatures'    => $temperatures,
             'colors'          => $colors
         ]);
-    });
-
-
-    $group->post('/start', function (Request $request, Response $response, $args) {
-        
-        $serialNumber = $this->get('serialNumber');
-    
-        $grilleyeApi = $this->get('api')->post("/grills/{$serialNumber}/sessions", [
-            'http_errors' => false
-        ]);
-    
-        $this->get('flash')->addMessage('alert', [
-            'type' => 'success', 
-            'message' => 'Session started! Dont\'t forget to set a name and choose your included probes.'
-        ]);
-        
-        $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('dashboard');
-        return $response->withStatus(302)->withHeader('Location', $url);
-    });
-
-    $group->post('/stop', function (Request $request, Response $response, $args) {
-        
-        $serialNumber = $this->get('serialNumber');
-    
-        $grilleyeApi = $this->get('api')->put("/grills/{$serialNumber}/sessions/current/finished-time", [
-            'http_errors' => false
-        ]);
-    
-        $this->get('flash')->addMessage('alert', [
-            'type' => 'success', 
-            'message' => 'Session stopped!.'
-        ]);
-        
-        $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('dashboard');
-        return $response->withStatus(302)->withHeader('Location', $url);
-    });
-
-    $group->post('/delete', function (Request $request, Response $response, $args) {
-    
-        $data = $request->getParsedBody();
-    
-        $grilleyeApi = $this->get('api')->delete("/sessions/{$data['sessionId']}", [
-            'http_errors' => false
-        ]);
-    
-        if($grilleyeApi->getStatusCode() != 200)
-        {
-            $this->get('flash')->addMessage('alert', [
-                'type' => 'danger',
-                'message' => 'Session could not be deleted'
-            ]);
-        }
-        else
-        {
-            $this->get('flash')->addMessage('alert', [
-                'type' => 'success', 
-                'message' => 'Session has been deleted'
-            ]);
-        }
-        
-        $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('sessions');
-        return $response->withStatus(302)->withHeader('Location', $url);
     });
 
 });
