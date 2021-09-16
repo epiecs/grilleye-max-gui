@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="row">
-	<div class="col-sm-9">
+	<div class="col-sm-7">
 		<h2>
 			{% if session.name %}
 			{{ session.name }}
@@ -11,7 +11,10 @@
 			{% endif %}
 		</h2>
 	</div>
-	<div class="col-sm-3 text-end">
+	<div class="col-sm-5 text-end">
+		<button class="btn btn-sm btn-danger" role="button" data-bs-toggle="modal" data-bs-target="#modal-{{session.id}}">
+			Delete session <i class="bi bi-trash"></i>
+		</button>
 		<a type="button" class="btn btn-sm btn-dark" target="_blank" href="/sessions/csv/{{ session.id }}">Download graph CSV</a>
 	</div>
 </div>
@@ -97,6 +100,15 @@
         </table>
     </div>
 </div>
+
+{% include 'elements/delete-modal.twig' with {
+	'modal': {
+		'id'    : session.id,
+		'action': "/sessions/delete",
+		'name'  : "sessionId",
+		'value' : session.id,
+	}
+} %}
 
 {% endblock %}
 
