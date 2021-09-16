@@ -8,9 +8,6 @@ error_reporting(E_ALL);
 
 //TODO button to choose refresh every 1-5-10 seconds?
 //TODO show max temp or temp range on chart?
-//TODO click through on probe to show only that probe?
-
-//TODO provide a edit session button
 
 use DI\Container;
 
