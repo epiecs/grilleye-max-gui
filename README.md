@@ -47,7 +47,6 @@ docker-compose up -d
 You can also install this on your own webserver and make the src directory the entrypoint.
 
 ## Roadmap
-- Pagination when using sessions
 - Support for multiple grilleye's? 
 - Show max temp or range on chart (maybe too much with 8 probes?)
 

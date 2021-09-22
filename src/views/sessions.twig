@@ -120,7 +120,20 @@
         } %}
 
     {% endfor %}
+
 </div>
 
+<div class="row py-2">
+    <div class="col">
+        <nav aria-label="Sessions pagination">
+            <ul class="pagination">
+                {% for pageNumber in 1..totalPages %}
+                    <li class="page-item"><a class="page-link" href="/sessions?{{ queryString }}&page={{ pageNumber -1 }}">{{ pageNumber }}</a></li>
+                {% endfor %}
+             </ul>
+        </nav>
+
+    </div>
+</div>
 
 {% endblock %}

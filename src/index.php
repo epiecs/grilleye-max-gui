@@ -262,7 +262,7 @@ $app->group('/sessions', function (RouteCollectorProxy $group) {
         $perPage  = isset($filters['perPage']) ? $filters['perPage'] : 10;
 
         // Yes I know it's ugly but it's the only way I can make it work with multiple meat types :(
-        $queryString = "page={$page}&perPage={$perPage}&fromDate={$fromDate}&toDate={$toDate}";
+        $queryString = "perPage={$perPage}&fromDate={$fromDate}&toDate={$toDate}";
 
         foreach ($filters as $filter) 
         {
@@ -271,6 +271,11 @@ $app->group('/sessions', function (RouteCollectorProxy $group) {
                 $queryString .= "&meatType={$filter}";
             }
         }
+
+        // For a quick solution we just send the query string as a var to the page for the pagination links
+        $paginationQueryString = $queryString;
+
+        $queryString .= "&page={$page}";
 
         $sessions = json_decode((string) $this->get('api')->get("/grills/{$serialNumber}/sessions", [
             'query' => $queryString
@@ -293,12 +298,11 @@ $app->group('/sessions', function (RouteCollectorProxy $group) {
 
         $view = Twig::fromRequest($request);
         
-        //TODO Pagination
-
         return $view->render($response, 'sessions.twig', [
             'filters'         => $filters,
             'sessions'        => $sessions['data'],
-            'totalSessions'   => $sessions['totalElements'],
+            'totalPages'      => ceil($sessions['totalElements'] / $perPage),
+            'queryString'     => $paginationQueryString,
             'perPage'         => $perPage,
             'pagination'      => $this->get('settings')['pagination'],
             'meatTypes'       => $meatTypes,
