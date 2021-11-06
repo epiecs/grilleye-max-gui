@@ -38,13 +38,16 @@ Before you begin you'll need to acquire your phone-id. This is the key that is u
 
 - download or clone this repository
 - navigate to the directory
-- run the following command
+- run the following commands
 ```
+composer install
 docker-compose up -d
 ```
 - **visit `<host`>:8000/settings to enter your phone-id**
 
-You can also install this on your own webserver and make the src directory the entrypoint.
+You can also install this on your own webserver and make the src directory the entrypoint. Dont forget to run the composer install command.
+
+**If you dont have composer installed yet you can follow the instructions at [getcomposer.org](https://getcomposer.org/download/)**
 
 ## Roadmap
 - Support for multiple grilleye's? 
