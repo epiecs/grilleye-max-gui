@@ -41,8 +41,7 @@ Before you begin you'll need to acquire your phone-id. This is the key that is u
 - navigate to the directory
 - run the following commands
 ```
-composer install
-docker-compose up -d
+docker compose up -d
 ```
 - **visit `<host`>:8000/settings to enter your phone-id**
 
