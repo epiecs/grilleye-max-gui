@@ -118,7 +118,7 @@ $container->set('presets', function ($container) {
     return $sortedPresets;
 });
 
-$container->set('serialNumber', function ($container) {  
+$container->set('serialNumber', function ($container) { 
     return json_decode((string) $container->get('api')->get('/grills')->getBody(), true)[0]['serialNumber'];
 });
 
@@ -197,11 +197,19 @@ $app->add(
 
 $app->get('/', function (Request $request, Response $response, $args) {
 
-    $serialNumber    = $this->get('serialNumber');
+    // If we don't have a phone id we redirect to settings    
     $settings        = $this->get('settings');
-    $temperatureUnit = $this->get('temperatureUnit');
-    $timezone        = new DateTimeZone($settings['timezone']);
 
+    if($settings['phone-id'] == "")
+    {
+        $url = RouteContext::fromRequest($request)->getRouteParser()->urlFor('settings');
+        return $response->withStatus(302)->withHeader('Location', $url);
+    }
+
+    $serialNumber    = $this->get('serialNumber');
+    $temperatureUnit = $this->get('temperatureUnit');
+    $timezone        = new DateTimeZone($settings['timezone']);        
+        
     $grill  = json_decode((string) $this->get('api')->get("/grills")->getBody(), true)[0];
     $apiProbes = json_decode((string) $this->get('api')->get("/grills/{$serialNumber}/probes")->getBody(), true);
     

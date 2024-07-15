@@ -1,9 +1,6 @@
-version: '3.8'
 services:
   grilleyegui-web:
     container_name: grilleyegui
     build: .
-    volumes:
-      - ./:/srv
     ports:
       - 8000:80
