@@ -88,9 +88,20 @@ After the script has run you will be presented with a list of values. The last v
 
 You can also do a manual firmware dump for your grilleye. I will not explain how to do this because this varies platform per platform. For this to work you will only need the first Megabyte of the firmware. Read up on how to dump the firmware for an esp32 using esptool :)
 
+This is the command I use:
+
+```
+# Linux/Mac - replace Yourport with the correct device
+esptool.py --baud 115200 --port /dev/YOUPORT read_flash 0x0 0x100000 grilleye.bin
+
+# Windows - replace COM? with your com port eg. COM3
+esptool.py --baud 115200 --port COM? read_flash 0x0 0x100000 grilleye.bin
+```
+
 I assume that the dump is called `grilleye.bin` and that you have `strings` installed.
 
 ```
+# Extract the phone-id values
 strings -n 10 grilleye.bin | grep -E '^[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}'
 ```
 
