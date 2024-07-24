@@ -14,6 +14,8 @@ This only works for GrillEye Max devices. You can find a store to buy one on the
   - [Develop your own app using the api](#develop-your-own-app-using-the-api)
     - [Playing around](#playing-around)
   - [How to get your phone-id](#how-to-get-your-phone-id)
+    - [Python script](#python-script)
+    - [Manually with your own firmware dump](#manually-with-your-own-firmware-dump)
     - [Postman](#postman)
     - [Windows](#windows)
     - [Mac/Linux](#maclinux)
@@ -39,10 +41,7 @@ Before you begin you'll need to acquire your phone-id. This is the key that is u
 
 - download or clone this repository
 - navigate to the directory
-- run the following commands
-```
-docker compose up -d
-```
+- run the following command `docker compose up -d`
 - **visit `<host`>:8000/settings to enter your phone-id**
 
 You can also install this on your own webserver and make the src directory the entrypoint. Dont forget to run the composer install command.
@@ -62,7 +61,38 @@ If you want to browse the api in your browser you can go to the [openapi swagger
 If you want to test the api via the Swagger ui you will have to use the `CORS-PROXY server`. This is because the requests are blocked by [CORS](https://swagger.io/docs/open-source-tools/swagger-ui/usage/cors/). You wont have this issue when using Postman.
 
 ## How to get your phone-id
-**There are a few methods described here that you can use to get your phone id. At the moment the only way that still works is by using postman. The method where you can extract the phone-id via a serial connection no longer works. It is just kept here in the documentation for posterity.**
+> **There are a few methods described here that you can use to get your phone id. At the moment the only way that still works is by using postman or the python script. The method where you can extract the phone-id via a serial connection (putty) no longer works. It is just kept here in the documentation for posterity.**
+
+### Python script
+
+In the `scripts` folder you can find a Python script that automates this process. I have only tested this on a Mac so YMMV. This needs Python3 > `3.9`
+
+> This script works by dumping the firmware of the grilleye and then looking for strings matching a specific regex. The script will automatically scan all serial ports to find the Grilleye.
+
+For windows you will need to download the drivers at https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers. You need the Universal Windows driver.
+
+Connect your Grilleye to your pc. *You do not need to turn it on*. Your grilleye will turn on and off again automatically.
+
+```sh
+cd scripts
+pip install -r requirements.txt
+
+python3 get_phone_id.py
+```
+
+After the script has run you will be presented with a list of values. The last value is _usually_ your phone-id.
+
+### Manually with your own firmware dump
+
+> Linux/Mac/WSL is recommended for this step.
+
+You can also do a manual firmware dump for your grilleye. I will not explain how to do this because this varies platform per platform. For this to work you will only need the first Megabyte of the firmware. Read up on how to dump the firmware for an esp32 using esptool :)
+
+I assume that the dump is called `grilleye.bin` and that you have `strings` installed.
+
+```
+strings -n 10 grilleye.bin | grep -E '^[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}'
+```
 
 ### Postman
 
