@@ -6,6 +6,11 @@ services:
       - 8000:80
     networks:
       - hosted_websites
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /var/www/html/src
 networks:
   hosted_websites:
     external: true
