@@ -19,6 +19,8 @@ use Slim\Flash\Messages;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Routing\RouteContext;
 
+use Slim\Exception\HttpNotFoundException;
+
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
@@ -170,6 +172,9 @@ $container->set('eventTypes', function () {
                                                                                 
 $twig = Twig::create(__DIR__ . '/views', ['cache' => false]);
 $app->add(TwigMiddleware::create($app, $twig));
+
+// https://www.slimframework.com/docs/v4/middleware/error-handling.html
+$errorMiddleware = $app->addErrorMiddleware(false, false, false);
 
 $app->add(
     function ($request, $next) {
@@ -977,8 +982,12 @@ $app->group('/api', function (RouteCollectorProxy $group) {
         $now = new DateTime("now");
         $now->setTimezone($timezone);
 
-        $session = json_decode((string) $this->get('api')->get("/grills/{$serialNumber}/sessions/current", ['timeout' => 10.0])->getBody(), true);
-        
+        try {   
+            $session = json_decode((string) $this->get('api')->get("/grills/{$serialNumber}/sessions/current", ['timeout' => 10.0])->getBody(), true);
+        } catch (\Throwable $th) {
+            throw new HttpNotFoundException($request);
+        }
+
         $sessionStart = new DateTime($session['timeCreated']);
         $sessionStart->setTimezone($timezone);
 
