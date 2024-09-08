@@ -63,6 +63,9 @@ If you want to test the api via the Swagger ui you will have to use the `CORS-PR
 ## How to get your phone-id
 > **There are a few methods described here that you can use to get your phone id. At the moment the only way that still works is by using postman or the python script. The method where you can extract the phone-id via a serial connection (putty) no longer works. It is just kept here in the documentation for posterity.**
 
+## Start developing with this repo
+Just run the development compose file with `docker compose -f compose-dev.yaml up --watch`.
+
 ### Python script
 
 In the `scripts` folder you can find a Python script that automates this process. I have only tested this on a Mac so YMMV. This needs Python3 > `3.9`

@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-body py-1 px-2">
             <div class="row">
-                <div class="col-6">
+                <div class="col-5">
                     <div class="col">
                         <span class="badge" style="background-color: {{ colors[probe.index - 1] }};" ><h6 class="m-0">Probe {{ probe.index | default("-") }}</h6></span>
                     </div>
@@ -10,7 +10,7 @@
                         {{ probe.temperaturesetting  | default("-") }}
                     </div>
                 </div>
-                <div class="col-6 probe-temperature text-end" id="probe-{{ probe.index }}-temperature">
+                <div class="col-7 probe-temperature text-end" id="probe-{{ probe.index }}-temperature">
                     {{ probe.temperature | default("-") }}
                 </div>
             </div>

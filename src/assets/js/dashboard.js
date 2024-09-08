@@ -4,6 +4,53 @@ var liveTemperatures = [];
 
 window.addEventListener('load', function () {
 
+    // Enable the screen lock checkbox/toggle so that our screen no longer goes to sleep
+    // only works in supported browsers
+
+    var dontsleepToggle = document.querySelector('#keepscreenon');
+
+    if(!("wakeLock" in navigator)) 
+    {
+        dontsleepToggle.disabled = true
+    }
+    else
+    {
+        // The toggle button
+        dontsleepToggle.addEventListener("click", async function(){
+
+            if(dontsleepToggle.checked)
+            {
+                try {
+                    screenlock = await navigator.wakeLock.request('screen');
+                } catch(err) {
+                    console.log(err.name, err.message);
+                }
+                return screenlock;
+            }
+            else
+            {
+                if(typeof screenlock !== "undefined" && screenlock != null) 
+                {
+                    screenlock.release().then(() => {
+                        screenlock = null;
+                    });
+                }
+            }
+        })
+        
+        // When we minimize the window, change tab etc... the lock is released. If this happens
+        // we need to uncheck the radio button. This is also triggered by devices with a low battery!
+        document.addEventListener('visibilitychange', async () => {
+            dontsleepToggle.checked = false;
+            if(typeof screenlock !== "undefined" && screenlock != null) 
+            {
+                screenlock.release().then(() => {
+                    screenlock = null;
+                });
+            }
+        });
+    }
+
     async function initializeLiveTemperatures() {
 
         let response = await fetch('/api/probes/dashboard', {
@@ -147,6 +194,6 @@ window.addEventListener('load', function () {
 
     // Start
     initializeLiveTemperatures();
-    getSessionSeries();
-    getGrillSeries();
+    // getSessionSeries();
+    // getGrillSeries();
 });
