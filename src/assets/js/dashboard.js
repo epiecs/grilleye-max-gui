@@ -81,7 +81,7 @@ window.addEventListener('load', function () {
         let response = await fetch('/api/probes/currentsession', {
             cache: 'no-cache'
         });
-
+        
         if(response.ok)
         {
             try {
@@ -99,7 +99,17 @@ window.addEventListener('load', function () {
             await new Promise(resolve => setTimeout(resolve, 60000));
             await getSessionSeries();
         }
+        else
+        {
+            // IF we get a 404 it means that we have no running session
+            // To lighten the load on the hyperion api we only check every minute
+            await new Promise(resolve => setTimeout(resolve, 60000));
+            await getSessionSeries();
+        }
     };
+
+    // Used if we need to wait for the grilleye to connect in order to not overload the api 
+    var waitSecondsRetry = 60;
 
     async function getGrillSeries() {
 
@@ -139,6 +149,7 @@ window.addEventListener('load', function () {
 
             //Connected
             grillConnected.classList.remove("bg-success", "bg-danger");
+            grillRefresh.style.display = 'none';
 
             if(grillData.grill.connected){
                 grillConnected.textContent = 'connected';
@@ -148,6 +159,21 @@ window.addEventListener('load', function () {
             {
                 grillConnected.textContent = 'disconnected';
                 grillConnected.classList.add("bg-danger");
+
+                grillRefresh.style.display = 'inline-block';
+
+                // If the grill is disconnected we do not need to check every second
+                // To lighten the load on the hyperion api we only check every minute
+
+                while (waitSecondsRetry > 0) 
+                {
+                    grillRefreshCountdown.textContent = waitSecondsRetry;
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    waitSecondsRetry--;
+                }
+                
+                waitSecondsRetry = 60
+                await getGrillSeries();
             }
             
             //PROBES
@@ -178,6 +204,15 @@ window.addEventListener('load', function () {
     var grillName = document.querySelector('#grill-name');
     var grillBattery = document.querySelector('#grill-battery span');
     var grillConnected = document.querySelector('#grill-connected');
+    var grillRefresh = document.querySelector('#grill-refresh');
+    var grillRefreshCountdown = document.querySelector('#grill-refresh-countdown');
+
+    grillRefresh.addEventListener("click", async function(){
+        grillRefresh.style.display = 'none';
+        waitSecondsRetry = 0;
+        // getGrillSeries();
+
+    });
 
     //Probes element selectors
     var probesCards = {};
@@ -194,6 +229,6 @@ window.addEventListener('load', function () {
 
     // Start
     initializeLiveTemperatures();
-    // getSessionSeries();
-    // getGrillSeries();
+    getSessionSeries();
+    getGrillSeries();
 });

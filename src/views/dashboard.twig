@@ -15,7 +15,7 @@
 </div>
 
 <div class="row">
-    <div class="col-5 col-lg-9">
+    <div class="col-5 col-lg-8">
         <h5 id="grill-name">{{ grill.name }}</h5>
         <!-- <small class="col-12 probe-info" id="grill-serialnumber">
             Serial: {{ grill.serialNumber }}
@@ -25,9 +25,10 @@
         </small> -->
     </div>
 
-    <div class="col-7 col-lg-3 text-end">
+    <div class="col-7 col-lg-4 text-end">
         <span class="badge bg-success" id="grill-battery">Battery: <span>{{ grill.battery }}</span>%</span>
         <span class="badge bg-success" id="grill-connected">Connected</span>
+        <span class="badge bg-danger" id="grill-refresh">Refresh: <span id="grill-refresh-countdown">60</span>s</span>
     </div>
 </div>
 
@@ -40,8 +41,10 @@
     </div>
 </div>
 <div class="row pt-1 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-2">
-    {% for probe in probes %}
-        {% include 'elements/probe.twig' with {'probe': probe} %}
+    {% for probeid,probe in probes %}
+        {% if settings.probeVisibility[probe.index] == 1 %}
+            {% include 'elements/probe.twig' with {'probe': probe} %}
+        {% endif %}
     {% endfor %}
 </div>
 <div class="row py-2">

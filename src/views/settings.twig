@@ -150,11 +150,29 @@
         <div class="col-sm-10">
             <div class="row">
                 {% for probeid,probecolor in localsettings.probeColors %}
-                    <div class="col col-sm-3 col-md-auto py-1">
+                    <div class="col col-3 col-md-auto py-1">
                         <input type="color" class="form-control form-control-color" id="probe-{{ probeid }}" name="localsettings[probeColors][{{ probeid }}]" value="{{ probecolor }}" title="Probe {{ probeid }}">
                         <div id="timeformatHelp" class="form-text">
                             Probe {{ probeid }}
                         </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="timeformat" class="col-sm-2 col-form-label">Probe visibility</label>
+        <div class="col-sm-10">
+            <div class="row">
+                
+                {% for probeid,visible in localsettings.probeVisibility %}
+                    
+                    <div class="col col-3 col-md-auto py-1">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="probe-visible-{{ probeid }}" name="localsettings[probeVisibility][{{ probeid }}]" title="Probe {{ probeid }}" {% if visible == 1 %}checked{% endif %}>
+                            <label class="form-check-label" for="flexSwitchCheckDefault">{{ probeid }}</label>
+                          </div>
                     </div>
                 {% endfor %}
             </div>

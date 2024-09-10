@@ -65,6 +65,16 @@ $container->set('settings', function () {
             6 => $_ENV['PROBE_COLOR_6'],   // orange
             7 => $_ENV['PROBE_COLOR_7'],   // deep purple
             8 => $_ENV['PROBE_COLOR_8'],   // turqoise
+        ],
+        'probeVisibility'   => [
+            1 => $_ENV['PROBE_VISIBILITY_1'],
+            2 => $_ENV['PROBE_VISIBILITY_2'],
+            3 => $_ENV['PROBE_VISIBILITY_3'],
+            4 => $_ENV['PROBE_VISIBILITY_4'],
+            5 => $_ENV['PROBE_VISIBILITY_5'],
+            6 => $_ENV['PROBE_VISIBILITY_6'],
+            7 => $_ENV['PROBE_VISIBILITY_7'],
+            8 => $_ENV['PROBE_VISIBILITY_8'],
         ]
     ];
 });
@@ -241,16 +251,17 @@ $app->get('/', function (Request $request, Response $response, $args) {
         //Just the Index to generate the probes
         $probes[$key]['index'] = $probe['probeIndex'] + 1;
     }
-    
+
     $view = Twig::fromRequest($request);
 
     return $view->render($response, 'dashboard.twig', [
-        'grill'    => $grill,
-        'probes'   => $probes,
-        'session'  => $session,
-        'settings' => $settings,
-        'colors'   => array_values($settings['probeColors']),
-        'alert'    => $this->get('flash')->getFirstMessage('alert')
+        'grill'      => $grill,
+        'probes'     => $probes,
+        'session'    => $session,
+        'settings'   => $settings,
+        'colors'     => array_values($settings['probeColors']),
+        'visibility' => array_values($settings['probeVisibility']),
+        'alert'      => $this->get('flash')->getFirstMessage('alert')
     ]);
 })->setName('dashboard');
 
@@ -628,6 +639,20 @@ $app->map(['GET', 'POST'], '/settings', function (Request $request, Response $re
             ]);
         }
 
+        $visibleProbes = array_keys($data['localsettings']['probeVisibility']);
+
+        for($i=1; $i < 9; $i++)
+        {
+            if(in_array($i, $visibleProbes))
+            {
+                $data['localsettings']['probeVisibility'][$i] = 1;
+            }
+            else
+            {
+                $data['localsettings']['probeVisibility'][$i] = 0;
+            }
+        }
+
         //Save the local settings to the .env file
         file_put_contents(__DIR__. '/../.env', str_replace("  ", "", "
             PHONEID=\"{$data['localsettings']['phone-id']}\" 
@@ -642,6 +667,14 @@ $app->map(['GET', 'POST'], '/settings', function (Request $request, Response $re
             PROBE_COLOR_6=\"{$data['localsettings']['probeColors'][6]}\"
             PROBE_COLOR_7=\"{$data['localsettings']['probeColors'][7]}\"
             PROBE_COLOR_8=\"{$data['localsettings']['probeColors'][8]}\"
+            PROBE_VISIBILITY_1=\"{$data['localsettings']['probeVisibility'][1]}\"
+            PROBE_VISIBILITY_2=\"{$data['localsettings']['probeVisibility'][2]}\"
+            PROBE_VISIBILITY_3=\"{$data['localsettings']['probeVisibility'][3]}\"
+            PROBE_VISIBILITY_4=\"{$data['localsettings']['probeVisibility'][4]}\"
+            PROBE_VISIBILITY_5=\"{$data['localsettings']['probeVisibility'][5]}\"
+            PROBE_VISIBILITY_6=\"{$data['localsettings']['probeVisibility'][6]}\"
+            PROBE_VISIBILITY_7=\"{$data['localsettings']['probeVisibility'][7]}\"
+            PROBE_VISIBILITY_8=\"{$data['localsettings']['probeVisibility'][8]}\"
         "));
 
         //If we dont have a valid phone id all settings will be disabled and there will be no data
