@@ -76,6 +76,8 @@ For windows you will need to download the drivers at https://www.silabs.com/deve
 
 Connect your Grilleye to your pc. *You do not need to turn it on*. Your grilleye will turn on and off again automatically.
 
+> Make sure that you use a usb cable that also supports data. I also had bad luck connecting my grilleye via a dock to my mac. A direct connection to the mac itself usually does the trick. YMMV.
+
 ```sh
 cd scripts
 pip install -r requirements.txt
