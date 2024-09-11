@@ -49,8 +49,7 @@ You can also install this on your own webserver and make the src directory the e
 **If you dont have composer installed yet you can follow the instructions at [getcomposer.org](https://getcomposer.org/download/)**
 
 ## Roadmap
-- Support for multiple grilleye's? 
-- Show max temp or range on chart (maybe too much with 8 probes?)
+- Dark mode
 
 ## Develop your own app using the api
 If you want to develop your own application you can use the openapi.yml or the postman.json file to browse and test the api. The postman.json contains a collection with variables where you can enter your phone-id and serial number.
