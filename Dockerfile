@@ -25,4 +25,5 @@ RUN a2enmod rewrite \
 
 
 # workdir verplaatsen en copy commands herwerken
+# multi stage build uitwerken?
 # composer install
