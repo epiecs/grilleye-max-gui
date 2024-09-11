@@ -12,6 +12,9 @@
         
         let options = {
             series: {{ series|json_encode|raw }},
+            theme: {
+                mode: '{{ theme }}'
+            },
             chart: {
                 type: 'line',
                 stacked: false,

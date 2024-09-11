@@ -1,9 +1,9 @@
 .nav-link {
-    color: #A72920;
+    /* color: #A72920; */
 }
 
 .nav-link:focus, .nav-link:hover {
-    color: #000000;
+    /* color: #000000; */
 }
 
 .probe-temperature {

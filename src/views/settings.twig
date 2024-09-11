@@ -14,7 +14,7 @@
     <div class="row mb-3">
         <label for="phone-id" class="col-sm-2 col-form-label">Phone-ID</label>
         <div class="col-sm-10">
-            <input class="form-control" type="text" id="phone-id" name="localsettings[phone-id]" placeholder="12abc3de-4567-89f0-a123-456b789012c3" value="{{ localsettings['phone-id'] }}">
+            <input class="form-control" type="text" id="phone-id" name="settings[phone-id]" placeholder="12abc3de-4567-89f0-a123-456b789012c3" value="{{ settings['phone-id'] }}">
             <div id="phone-idHelp" class="form-text">
                 Your phone id. Consult the <a href="https://github.com/epiecs/grilleye-max-gui#how-to-get-your-phone-id">documentation</a> on how to obtain this.
             </div>
@@ -24,89 +24,89 @@
     <div class="row mb-3">
         <label for="timezone" class="col-sm-2 col-form-label">Timezone</label>
         <div class="col-sm-10">
-            <select class="form-select" id="timezone" name="localsettings[timezone]">
-                <option {% if localsettings.timezone == 'Etc/GMT' %} selected="selected"{% endif %} value="Etc/GMT+12">(GMT-12:00) International Date Line West</option>
-                <option {% if localsettings.timezone == 'Pacific/Midway' %} selected="selected"{% endif %} value="Pacific/Midway">(GMT-11:00) Midway Island, Samoa</option>
-                <option {% if localsettings.timezone == 'Pacific/Honolulu' %} selected="selected"{% endif %} value="Pacific/Honolulu">(GMT-10:00) Hawaii</option>
-                <option {% if localsettings.timezone == 'US/Alaska' %} selected="selected"{% endif %} value="US/Alaska">(GMT-09:00) Alaska</option>
-                <option {% if localsettings.timezone == 'America/Los_Angeles' %} selected="selected"{% endif %} value="America/Los_Angeles">(GMT-08:00) Pacific Time (US & Canada)</option>
-                <option {% if localsettings.timezone == 'America/Tijuana' %} selected="selected"{% endif %} value="America/Tijuana">(GMT-08:00) Tijuana, Baja California</option>
-                <option {% if localsettings.timezone == 'US/Arizona' %} selected="selected"{% endif %} value="US/Arizona">(GMT-07:00) Arizona</option>
-                <option {% if localsettings.timezone == 'America/Chihuahua' %} selected="selected"{% endif %} value="America/Chihuahua">(GMT-07:00) Chihuahua, La Paz, Mazatlan</option>
-                <option {% if localsettings.timezone == 'US/Mountain' %} selected="selected"{% endif %} value="US/Mountain">(GMT-07:00) Mountain Time (US & Canada)</option>
-                <option {% if localsettings.timezone == 'America/Managua' %} selected="selected"{% endif %} value="America/Managua">(GMT-06:00) Central America</option>
-                <option {% if localsettings.timezone == 'US/Central' %} selected="selected"{% endif %} value="US/Central">(GMT-06:00) Central Time (US & Canada)</option>
-                <option {% if localsettings.timezone == 'America/Mexico_City' %} selected="selected"{% endif %} value="America/Mexico_City">(GMT-06:00) Guadalajara, Mexico City, Monterrey</option>
-                <option {% if localsettings.timezone == 'Canada/Saskatchewan' %} selected="selected"{% endif %} value="Canada/Saskatchewan">(GMT-06:00) Saskatchewan</option>
-                <option {% if localsettings.timezone == 'America/Bogota' %} selected="selected"{% endif %} value="America/Bogota">(GMT-05:00) Bogota, Lima, Quito, Rio Branco</option>
-                <option {% if localsettings.timezone == 'US/Eastern' %} selected="selected"{% endif %} value="US/Eastern">(GMT-05:00) Eastern Time (US & Canada)</option>
-                <option {% if localsettings.timezone == 'US/East' %} selected="selected"{% endif %} value="US/East-Indiana">(GMT-05:00) Indiana (East)</option>
-                <option {% if localsettings.timezone == 'Canada/Atlantic' %} selected="selected"{% endif %} value="Canada/Atlantic">(GMT-04:00) Atlantic Time (Canada)</option>
-                <option {% if localsettings.timezone == 'America/Caracas' %} selected="selected"{% endif %} value="America/Caracas">(GMT-04:00) Caracas, La Paz</option>
-                <option {% if localsettings.timezone == 'America/Manaus' %} selected="selected"{% endif %} value="America/Manaus">(GMT-04:00) Manaus</option>
-                <option {% if localsettings.timezone == 'America/Santiago' %} selected="selected"{% endif %} value="America/Santiago">(GMT-04:00) Santiago</option>
-                <option {% if localsettings.timezone == 'Canada/Newfoundland' %} selected="selected"{% endif %} value="Canada/Newfoundland">(GMT-03:30) Newfoundland</option>
-                <option {% if localsettings.timezone == 'America/Sao_Paulo' %} selected="selected"{% endif %} value="America/Sao_Paulo">(GMT-03:00) Brasilia</option>
-                <option {% if localsettings.timezone == 'America/Argentina' %} selected="selected"{% endif %} value="America/Argentina/Buenos_Aires">(GMT-03:00) Buenos Aires, Georgetown</option>
-                <option {% if localsettings.timezone == 'America/Godthab' %} selected="selected"{% endif %} value="America/Godthab">(GMT-03:00) Greenland</option>
-                <option {% if localsettings.timezone == 'America/Montevideo' %} selected="selected"{% endif %} value="America/Montevideo">(GMT-03:00) Montevideo</option>
-                <option {% if localsettings.timezone == 'America/Noronha' %} selected="selected"{% endif %} value="America/Noronha">(GMT-02:00) Mid-Atlantic</option>
-                <option {% if localsettings.timezone == 'Atlantic/Cape_Verde' %} selected="selected"{% endif %} value="Atlantic/Cape_Verde">(GMT-01:00) Cape Verde Is.</option>
-                <option {% if localsettings.timezone == 'Atlantic/Azores' %} selected="selected"{% endif %} value="Atlantic/Azores">(GMT-01:00) Azores</option>
-                <option {% if localsettings.timezone == 'Africa/Casablanca' %} selected="selected"{% endif %} value="Africa/Casablanca">(GMT+00:00) Casablanca, Monrovia, Reykjavik</option>
-                <option {% if localsettings.timezone == 'Etc/Greenwich' %} selected="selected"{% endif %} value="Etc/Greenwich">(GMT+00:00) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London</option>
-                <option {% if localsettings.timezone == 'Europe/Amsterdam' %} selected="selected"{% endif %} value="Europe/Amsterdam">(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna</option>
-                <option {% if localsettings.timezone == 'Europe/Belgrade' %} selected="selected"{% endif %} value="Europe/Belgrade">(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague</option>
-                <option {% if localsettings.timezone == 'Europe/Brussels' %} selected="selected"{% endif %} value="Europe/Brussels">(GMT+01:00) Brussels, Copenhagen, Madrid, Paris</option>
-                <option {% if localsettings.timezone == 'Europe/Sarajevo' %} selected="selected"{% endif %} value="Europe/Sarajevo">(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb</option>
-                <option {% if localsettings.timezone == 'Africa/Lagos' %} selected="selected"{% endif %} value="Africa/Lagos">(GMT+01:00) West Central Africa</option>
-                <option {% if localsettings.timezone == 'Asia/Amman' %} selected="selected"{% endif %} value="Asia/Amman">(GMT+02:00) Amman</option>
-                <option {% if localsettings.timezone == 'Europe/Athens' %} selected="selected"{% endif %} value="Europe/Athens">(GMT+02:00) Athens, Bucharest, Istanbul</option>
-                <option {% if localsettings.timezone == 'Asia/Beirut' %} selected="selected"{% endif %} value="Asia/Beirut">(GMT+02:00) Beirut</option>
-                <option {% if localsettings.timezone == 'Africa/Cairo' %} selected="selected"{% endif %} value="Africa/Cairo">(GMT+02:00) Cairo</option>
-                <option {% if localsettings.timezone == 'Africa/Harare' %} selected="selected"{% endif %} value="Africa/Harare">(GMT+02:00) Harare, Pretoria</option>
-                <option {% if localsettings.timezone == 'Europe/Helsinki' %} selected="selected"{% endif %} value="Europe/Helsinki">(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius</option>
-                <option {% if localsettings.timezone == 'Asia/Jerusalem' %} selected="selected"{% endif %} value="Asia/Jerusalem">(GMT+02:00) Jerusalem</option>
-                <option {% if localsettings.timezone == 'Europe/Minsk' %} selected="selected"{% endif %} value="Europe/Minsk">(GMT+02:00) Minsk</option>
-                <option {% if localsettings.timezone == 'Africa/Windhoek' %} selected="selected"{% endif %} value="Africa/Windhoek">(GMT+02:00) Windhoek</option>
-                <option {% if localsettings.timezone == 'Asia/Kuwait' %} selected="selected"{% endif %} value="Asia/Kuwait">(GMT+03:00) Kuwait, Riyadh, Baghdad</option>
-                <option {% if localsettings.timezone == 'Europe/Moscow' %} selected="selected"{% endif %} value="Europe/Moscow">(GMT+03:00) Moscow, St. Petersburg, Volgograd</option>
-                <option {% if localsettings.timezone == 'Africa/Nairobi' %} selected="selected"{% endif %} value="Africa/Nairobi">(GMT+03:00) Nairobi</option>
-                <option {% if localsettings.timezone == 'Asia/Tbilisi' %} selected="selected"{% endif %} value="Asia/Tbilisi">(GMT+03:00) Tbilisi</option>
-                <option {% if localsettings.timezone == 'Asia/Tehran' %} selected="selected"{% endif %} value="Asia/Tehran">(GMT+03:30) Tehran</option>
-                <option {% if localsettings.timezone == 'Asia/Muscat' %} selected="selected"{% endif %} value="Asia/Muscat">(GMT+04:00) Abu Dhabi, Muscat</option>
-                <option {% if localsettings.timezone == 'Asia/Baku' %} selected="selected"{% endif %} value="Asia/Baku">(GMT+04:00) Baku</option>
-                <option {% if localsettings.timezone == 'Asia/Yerevan' %} selected="selected"{% endif %} value="Asia/Yerevan">(GMT+04:00) Yerevan</option>
-                <option {% if localsettings.timezone == 'Asia/Kabul' %} selected="selected"{% endif %} value="Asia/Kabul">(GMT+04:30) Kabul</option>
-                <option {% if localsettings.timezone == 'Asia/Yekaterinburg' %} selected="selected"{% endif %} value="Asia/Yekaterinburg">(GMT+05:00) Yekaterinburg</option>
-                <option {% if localsettings.timezone == 'Asia/Karachi' %} selected="selected"{% endif %} value="Asia/Karachi">(GMT+05:00) Islamabad, Karachi, Tashkent</option>
-                <option {% if localsettings.timezone == 'Asia/Calcutta' %} selected="selected"{% endif %} value="Asia/Calcutta">(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi</option>
-                <option {% if localsettings.timezone == 'Asia/Calcutta' %} selected="selected"{% endif %} value="Asia/Calcutta">(GMT+05:30) Sri Jayawardenapura</option>
-                <option {% if localsettings.timezone == 'Asia/Katmandu' %} selected="selected"{% endif %} value="Asia/Katmandu">(GMT+05:45) Kathmandu</option>
-                <option {% if localsettings.timezone == 'Asia/Almaty' %} selected="selected"{% endif %} value="Asia/Almaty">(GMT+06:00) Almaty, Novosibirsk</option>
-                <option {% if localsettings.timezone == 'Asia/Dhaka' %} selected="selected"{% endif %} value="Asia/Dhaka">(GMT+06:00) Astana, Dhaka</option>
-                <option {% if localsettings.timezone == 'Asia/Rangoon' %} selected="selected"{% endif %} value="Asia/Rangoon">(GMT+06:30) Yangon (Rangoon)</option>
-                <option {% if localsettings.timezone == 'Asia/Bangkok' %} selected="selected"{% endif %} value="Asia/Bangkok">(GMT+07:00) Bangkok, Hanoi, Jakarta</option>
-                <option {% if localsettings.timezone == 'Asia/Krasnoyarsk' %} selected="selected"{% endif %} value="Asia/Krasnoyarsk">(GMT+07:00) Krasnoyarsk</option>
-                <option {% if localsettings.timezone == 'Asia/Hong_Kong' %} selected="selected"{% endif %} value="Asia/Hong_Kong">(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi</option>
-                <option {% if localsettings.timezone == 'Asia/Kuala_Lumpur' %} selected="selected"{% endif %} value="Asia/Kuala_Lumpur">(GMT+08:00) Kuala Lumpur, Singapore</option>
-                <option {% if localsettings.timezone == 'Asia/Irkutsk' %} selected="selected"{% endif %} value="Asia/Irkutsk">(GMT+08:00) Irkutsk, Ulaan Bataar</option>
-                <option {% if localsettings.timezone == 'Australia/Perth' %} selected="selected"{% endif %} value="Australia/Perth">(GMT+08:00) Perth</option>
-                <option {% if localsettings.timezone == 'Asia/Taipei' %} selected="selected"{% endif %} value="Asia/Taipei">(GMT+08:00) Taipei</option>
-                <option {% if localsettings.timezone == 'Asia/Tokyo' %} selected="selected"{% endif %} value="Asia/Tokyo">(GMT+09:00) Osaka, Sapporo, Tokyo</option>
-                <option {% if localsettings.timezone == 'Asia/Seoul' %} selected="selected"{% endif %} value="Asia/Seoul">(GMT+09:00) Seoul</option>
-                <option {% if localsettings.timezone == 'Asia/Yakutsk' %} selected="selected"{% endif %} value="Asia/Yakutsk">(GMT+09:00) Yakutsk</option>
-                <option {% if localsettings.timezone == 'Australia/Adelaide' %} selected="selected"{% endif %} value="Australia/Adelaide">(GMT+09:30) Adelaide</option>
-                <option {% if localsettings.timezone == 'Australia/Darwin' %} selected="selected"{% endif %} value="Australia/Darwin">(GMT+09:30) Darwin</option>
-                <option {% if localsettings.timezone == 'Australia/Brisbane' %} selected="selected"{% endif %} value="Australia/Brisbane">(GMT+10:00) Brisbane</option>
-                <option {% if localsettings.timezone == 'Australia/Canberra' %} selected="selected"{% endif %} value="Australia/Canberra">(GMT+10:00) Canberra, Melbourne, Sydney</option>
-                <option {% if localsettings.timezone == 'Australia/Hobart' %} selected="selected"{% endif %} value="Australia/Hobart">(GMT+10:00) Hobart</option>
-                <option {% if localsettings.timezone == 'Pacific/Guam' %} selected="selected"{% endif %} value="Pacific/Guam">(GMT+10:00) Guam, Port Moresby</option>
-                <option {% if localsettings.timezone == 'Asia/Vladivostok' %} selected="selected"{% endif %} value="Asia/Vladivostok">(GMT+10:00) Vladivostok</option>
-                <option {% if localsettings.timezone == 'Asia/Magadan' %} selected="selected"{% endif %} value="Asia/Magadan">(GMT+11:00) Magadan, Solomon Is., New Caledonia</option>
-                <option {% if localsettings.timezone == 'Pacific/Auckland' %} selected="selected"{% endif %} value="Pacific/Auckland">(GMT+12:00) Auckland, Wellington</option>
-                <option {% if localsettings.timezone == 'Pacific/Fiji' %} selected="selected"{% endif %} value="Pacific/Fiji">(GMT+12:00) Fiji, Kamchatka, Marshall Is.</option>
-                <option {% if localsettings.timezone == 'Pacific/Tongatapu' %} selected="selected"{% endif %} value="Pacific/Tongatapu">(GMT+13:00) Nuku'alofa</option>
+            <select class="form-select" id="timezone" name="settings[timezone]">
+                <option {% if settings.timezone == 'Etc/GMT' %} selected="selected"{% endif %} value="Etc/GMT+12">(GMT-12:00) International Date Line West</option>
+                <option {% if settings.timezone == 'Pacific/Midway' %} selected="selected"{% endif %} value="Pacific/Midway">(GMT-11:00) Midway Island, Samoa</option>
+                <option {% if settings.timezone == 'Pacific/Honolulu' %} selected="selected"{% endif %} value="Pacific/Honolulu">(GMT-10:00) Hawaii</option>
+                <option {% if settings.timezone == 'US/Alaska' %} selected="selected"{% endif %} value="US/Alaska">(GMT-09:00) Alaska</option>
+                <option {% if settings.timezone == 'America/Los_Angeles' %} selected="selected"{% endif %} value="America/Los_Angeles">(GMT-08:00) Pacific Time (US & Canada)</option>
+                <option {% if settings.timezone == 'America/Tijuana' %} selected="selected"{% endif %} value="America/Tijuana">(GMT-08:00) Tijuana, Baja California</option>
+                <option {% if settings.timezone == 'US/Arizona' %} selected="selected"{% endif %} value="US/Arizona">(GMT-07:00) Arizona</option>
+                <option {% if settings.timezone == 'America/Chihuahua' %} selected="selected"{% endif %} value="America/Chihuahua">(GMT-07:00) Chihuahua, La Paz, Mazatlan</option>
+                <option {% if settings.timezone == 'US/Mountain' %} selected="selected"{% endif %} value="US/Mountain">(GMT-07:00) Mountain Time (US & Canada)</option>
+                <option {% if settings.timezone == 'America/Managua' %} selected="selected"{% endif %} value="America/Managua">(GMT-06:00) Central America</option>
+                <option {% if settings.timezone == 'US/Central' %} selected="selected"{% endif %} value="US/Central">(GMT-06:00) Central Time (US & Canada)</option>
+                <option {% if settings.timezone == 'America/Mexico_City' %} selected="selected"{% endif %} value="America/Mexico_City">(GMT-06:00) Guadalajara, Mexico City, Monterrey</option>
+                <option {% if settings.timezone == 'Canada/Saskatchewan' %} selected="selected"{% endif %} value="Canada/Saskatchewan">(GMT-06:00) Saskatchewan</option>
+                <option {% if settings.timezone == 'America/Bogota' %} selected="selected"{% endif %} value="America/Bogota">(GMT-05:00) Bogota, Lima, Quito, Rio Branco</option>
+                <option {% if settings.timezone == 'US/Eastern' %} selected="selected"{% endif %} value="US/Eastern">(GMT-05:00) Eastern Time (US & Canada)</option>
+                <option {% if settings.timezone == 'US/East' %} selected="selected"{% endif %} value="US/East-Indiana">(GMT-05:00) Indiana (East)</option>
+                <option {% if settings.timezone == 'Canada/Atlantic' %} selected="selected"{% endif %} value="Canada/Atlantic">(GMT-04:00) Atlantic Time (Canada)</option>
+                <option {% if settings.timezone == 'America/Caracas' %} selected="selected"{% endif %} value="America/Caracas">(GMT-04:00) Caracas, La Paz</option>
+                <option {% if settings.timezone == 'America/Manaus' %} selected="selected"{% endif %} value="America/Manaus">(GMT-04:00) Manaus</option>
+                <option {% if settings.timezone == 'America/Santiago' %} selected="selected"{% endif %} value="America/Santiago">(GMT-04:00) Santiago</option>
+                <option {% if settings.timezone == 'Canada/Newfoundland' %} selected="selected"{% endif %} value="Canada/Newfoundland">(GMT-03:30) Newfoundland</option>
+                <option {% if settings.timezone == 'America/Sao_Paulo' %} selected="selected"{% endif %} value="America/Sao_Paulo">(GMT-03:00) Brasilia</option>
+                <option {% if settings.timezone == 'America/Argentina' %} selected="selected"{% endif %} value="America/Argentina/Buenos_Aires">(GMT-03:00) Buenos Aires, Georgetown</option>
+                <option {% if settings.timezone == 'America/Godthab' %} selected="selected"{% endif %} value="America/Godthab">(GMT-03:00) Greenland</option>
+                <option {% if settings.timezone == 'America/Montevideo' %} selected="selected"{% endif %} value="America/Montevideo">(GMT-03:00) Montevideo</option>
+                <option {% if settings.timezone == 'America/Noronha' %} selected="selected"{% endif %} value="America/Noronha">(GMT-02:00) Mid-Atlantic</option>
+                <option {% if settings.timezone == 'Atlantic/Cape_Verde' %} selected="selected"{% endif %} value="Atlantic/Cape_Verde">(GMT-01:00) Cape Verde Is.</option>
+                <option {% if settings.timezone == 'Atlantic/Azores' %} selected="selected"{% endif %} value="Atlantic/Azores">(GMT-01:00) Azores</option>
+                <option {% if settings.timezone == 'Africa/Casablanca' %} selected="selected"{% endif %} value="Africa/Casablanca">(GMT+00:00) Casablanca, Monrovia, Reykjavik</option>
+                <option {% if settings.timezone == 'Etc/Greenwich' %} selected="selected"{% endif %} value="Etc/Greenwich">(GMT+00:00) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London</option>
+                <option {% if settings.timezone == 'Europe/Amsterdam' %} selected="selected"{% endif %} value="Europe/Amsterdam">(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna</option>
+                <option {% if settings.timezone == 'Europe/Belgrade' %} selected="selected"{% endif %} value="Europe/Belgrade">(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague</option>
+                <option {% if settings.timezone == 'Europe/Brussels' %} selected="selected"{% endif %} value="Europe/Brussels">(GMT+01:00) Brussels, Copenhagen, Madrid, Paris</option>
+                <option {% if settings.timezone == 'Europe/Sarajevo' %} selected="selected"{% endif %} value="Europe/Sarajevo">(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb</option>
+                <option {% if settings.timezone == 'Africa/Lagos' %} selected="selected"{% endif %} value="Africa/Lagos">(GMT+01:00) West Central Africa</option>
+                <option {% if settings.timezone == 'Asia/Amman' %} selected="selected"{% endif %} value="Asia/Amman">(GMT+02:00) Amman</option>
+                <option {% if settings.timezone == 'Europe/Athens' %} selected="selected"{% endif %} value="Europe/Athens">(GMT+02:00) Athens, Bucharest, Istanbul</option>
+                <option {% if settings.timezone == 'Asia/Beirut' %} selected="selected"{% endif %} value="Asia/Beirut">(GMT+02:00) Beirut</option>
+                <option {% if settings.timezone == 'Africa/Cairo' %} selected="selected"{% endif %} value="Africa/Cairo">(GMT+02:00) Cairo</option>
+                <option {% if settings.timezone == 'Africa/Harare' %} selected="selected"{% endif %} value="Africa/Harare">(GMT+02:00) Harare, Pretoria</option>
+                <option {% if settings.timezone == 'Europe/Helsinki' %} selected="selected"{% endif %} value="Europe/Helsinki">(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius</option>
+                <option {% if settings.timezone == 'Asia/Jerusalem' %} selected="selected"{% endif %} value="Asia/Jerusalem">(GMT+02:00) Jerusalem</option>
+                <option {% if settings.timezone == 'Europe/Minsk' %} selected="selected"{% endif %} value="Europe/Minsk">(GMT+02:00) Minsk</option>
+                <option {% if settings.timezone == 'Africa/Windhoek' %} selected="selected"{% endif %} value="Africa/Windhoek">(GMT+02:00) Windhoek</option>
+                <option {% if settings.timezone == 'Asia/Kuwait' %} selected="selected"{% endif %} value="Asia/Kuwait">(GMT+03:00) Kuwait, Riyadh, Baghdad</option>
+                <option {% if settings.timezone == 'Europe/Moscow' %} selected="selected"{% endif %} value="Europe/Moscow">(GMT+03:00) Moscow, St. Petersburg, Volgograd</option>
+                <option {% if settings.timezone == 'Africa/Nairobi' %} selected="selected"{% endif %} value="Africa/Nairobi">(GMT+03:00) Nairobi</option>
+                <option {% if settings.timezone == 'Asia/Tbilisi' %} selected="selected"{% endif %} value="Asia/Tbilisi">(GMT+03:00) Tbilisi</option>
+                <option {% if settings.timezone == 'Asia/Tehran' %} selected="selected"{% endif %} value="Asia/Tehran">(GMT+03:30) Tehran</option>
+                <option {% if settings.timezone == 'Asia/Muscat' %} selected="selected"{% endif %} value="Asia/Muscat">(GMT+04:00) Abu Dhabi, Muscat</option>
+                <option {% if settings.timezone == 'Asia/Baku' %} selected="selected"{% endif %} value="Asia/Baku">(GMT+04:00) Baku</option>
+                <option {% if settings.timezone == 'Asia/Yerevan' %} selected="selected"{% endif %} value="Asia/Yerevan">(GMT+04:00) Yerevan</option>
+                <option {% if settings.timezone == 'Asia/Kabul' %} selected="selected"{% endif %} value="Asia/Kabul">(GMT+04:30) Kabul</option>
+                <option {% if settings.timezone == 'Asia/Yekaterinburg' %} selected="selected"{% endif %} value="Asia/Yekaterinburg">(GMT+05:00) Yekaterinburg</option>
+                <option {% if settings.timezone == 'Asia/Karachi' %} selected="selected"{% endif %} value="Asia/Karachi">(GMT+05:00) Islamabad, Karachi, Tashkent</option>
+                <option {% if settings.timezone == 'Asia/Calcutta' %} selected="selected"{% endif %} value="Asia/Calcutta">(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi</option>
+                <option {% if settings.timezone == 'Asia/Calcutta' %} selected="selected"{% endif %} value="Asia/Calcutta">(GMT+05:30) Sri Jayawardenapura</option>
+                <option {% if settings.timezone == 'Asia/Katmandu' %} selected="selected"{% endif %} value="Asia/Katmandu">(GMT+05:45) Kathmandu</option>
+                <option {% if settings.timezone == 'Asia/Almaty' %} selected="selected"{% endif %} value="Asia/Almaty">(GMT+06:00) Almaty, Novosibirsk</option>
+                <option {% if settings.timezone == 'Asia/Dhaka' %} selected="selected"{% endif %} value="Asia/Dhaka">(GMT+06:00) Astana, Dhaka</option>
+                <option {% if settings.timezone == 'Asia/Rangoon' %} selected="selected"{% endif %} value="Asia/Rangoon">(GMT+06:30) Yangon (Rangoon)</option>
+                <option {% if settings.timezone == 'Asia/Bangkok' %} selected="selected"{% endif %} value="Asia/Bangkok">(GMT+07:00) Bangkok, Hanoi, Jakarta</option>
+                <option {% if settings.timezone == 'Asia/Krasnoyarsk' %} selected="selected"{% endif %} value="Asia/Krasnoyarsk">(GMT+07:00) Krasnoyarsk</option>
+                <option {% if settings.timezone == 'Asia/Hong_Kong' %} selected="selected"{% endif %} value="Asia/Hong_Kong">(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi</option>
+                <option {% if settings.timezone == 'Asia/Kuala_Lumpur' %} selected="selected"{% endif %} value="Asia/Kuala_Lumpur">(GMT+08:00) Kuala Lumpur, Singapore</option>
+                <option {% if settings.timezone == 'Asia/Irkutsk' %} selected="selected"{% endif %} value="Asia/Irkutsk">(GMT+08:00) Irkutsk, Ulaan Bataar</option>
+                <option {% if settings.timezone == 'Australia/Perth' %} selected="selected"{% endif %} value="Australia/Perth">(GMT+08:00) Perth</option>
+                <option {% if settings.timezone == 'Asia/Taipei' %} selected="selected"{% endif %} value="Asia/Taipei">(GMT+08:00) Taipei</option>
+                <option {% if settings.timezone == 'Asia/Tokyo' %} selected="selected"{% endif %} value="Asia/Tokyo">(GMT+09:00) Osaka, Sapporo, Tokyo</option>
+                <option {% if settings.timezone == 'Asia/Seoul' %} selected="selected"{% endif %} value="Asia/Seoul">(GMT+09:00) Seoul</option>
+                <option {% if settings.timezone == 'Asia/Yakutsk' %} selected="selected"{% endif %} value="Asia/Yakutsk">(GMT+09:00) Yakutsk</option>
+                <option {% if settings.timezone == 'Australia/Adelaide' %} selected="selected"{% endif %} value="Australia/Adelaide">(GMT+09:30) Adelaide</option>
+                <option {% if settings.timezone == 'Australia/Darwin' %} selected="selected"{% endif %} value="Australia/Darwin">(GMT+09:30) Darwin</option>
+                <option {% if settings.timezone == 'Australia/Brisbane' %} selected="selected"{% endif %} value="Australia/Brisbane">(GMT+10:00) Brisbane</option>
+                <option {% if settings.timezone == 'Australia/Canberra' %} selected="selected"{% endif %} value="Australia/Canberra">(GMT+10:00) Canberra, Melbourne, Sydney</option>
+                <option {% if settings.timezone == 'Australia/Hobart' %} selected="selected"{% endif %} value="Australia/Hobart">(GMT+10:00) Hobart</option>
+                <option {% if settings.timezone == 'Pacific/Guam' %} selected="selected"{% endif %} value="Pacific/Guam">(GMT+10:00) Guam, Port Moresby</option>
+                <option {% if settings.timezone == 'Asia/Vladivostok' %} selected="selected"{% endif %} value="Asia/Vladivostok">(GMT+10:00) Vladivostok</option>
+                <option {% if settings.timezone == 'Asia/Magadan' %} selected="selected"{% endif %} value="Asia/Magadan">(GMT+11:00) Magadan, Solomon Is., New Caledonia</option>
+                <option {% if settings.timezone == 'Pacific/Auckland' %} selected="selected"{% endif %} value="Pacific/Auckland">(GMT+12:00) Auckland, Wellington</option>
+                <option {% if settings.timezone == 'Pacific/Fiji' %} selected="selected"{% endif %} value="Pacific/Fiji">(GMT+12:00) Fiji, Kamchatka, Marshall Is.</option>
+                <option {% if settings.timezone == 'Pacific/Tongatapu' %} selected="selected"{% endif %} value="Pacific/Tongatapu">(GMT+13:00) Nuku'alofa</option>
             </select>
             <div id="timezoneHelp" class="form-text">
                 Your timezone. This is used to correctly calculate all dates from GMT.
@@ -117,11 +117,11 @@
     <div class="row mb-3">
         <label for="liveMinutes" class="col-sm-2 col-form-label">Live minutes</label>
         <div class="col-sm-10">
-            <select class="form-select" id="liveMinutes" name="localsettings[liveMinutes]" {{ disabled }}>
-                <option value="5" {% if localsettings.liveMinutes == '5' %} selected="selected"{% endif %}>5 minutes</option>
-                <option value="10" {% if localsettings.liveMinutes == '10' %} selected="selected"{% endif %}>10 minutes</option>
-                <option value="15" {% if localsettings.liveMinutes == '15' %} selected="selected"{% endif %}>15 minutes</option>
-                <option value="30" {% if localsettings.liveMinutes == '30' %} selected="selected"{% endif %}>30 minutes</option>
+            <select class="form-select" id="liveMinutes" name="settings[liveMinutes]" {{ disabled }}>
+                <option value="5" {% if settings.liveMinutes == '5' %} selected="selected"{% endif %}>5 minutes</option>
+                <option value="10" {% if settings.liveMinutes == '10' %} selected="selected"{% endif %}>10 minutes</option>
+                <option value="15" {% if settings.liveMinutes == '15' %} selected="selected"{% endif %}>15 minutes</option>
+                <option value="30" {% if settings.liveMinutes == '30' %} selected="selected"{% endif %}>30 minutes</option>
             </select>
             <div id="liveMinutesHelp" class="form-text">
                 How many minutes are shown on the live graph.
@@ -132,12 +132,12 @@
     <div class="row mb-3">
         <label for="timeformat" class="col-sm-2 col-form-label">Time/date format</label>
         <div class="col-sm-10">
-            <select class="form-select" id="timeformat" name="localsettings[timeformat]" {{ disabled }}>
-                <option value="Y-m-d H:i" {% if localsettings.timeformat == 'Y-m-d H:i' %} selected="selected"{% endif %}>{{ 'now'|date("Y-m-d H:i") }}</option>
-                <option value="d-m-Y H:i" {% if localsettings.timeformat == 'd-m-Y H:i' %} selected="selected"{% endif %}>{{ 'now'|date("d-m-Y H:i") }}</option>
-                <option value="m-d-Y H:i" {% if localsettings.timeformat == 'm-d-Y H:i' %} selected="selected"{% endif %}>{{ 'now'|date("m-d-Y H:i") }}</option>
-                <option value="D M j H:i" {% if localsettings.timeformat == 'D M j H:i' %} selected="selected"{% endif %}>{{ 'now'|date("D M j H:i") }}</option>
-                <option value="F j, Y, g:i a" {% if localsettings.timeformat == 'F j, Y, g:i a' %} selected="selected"{% endif %}>{{ 'now'|date("F j, Y, g:i a") }}</option>
+            <select class="form-select" id="timeformat" name="settings[timeformat]" {{ disabled }}>
+                <option value="Y-m-d H:i" {% if settings.timeformat == 'Y-m-d H:i' %} selected="selected"{% endif %}>{{ 'now'|date("Y-m-d H:i") }}</option>
+                <option value="d-m-Y H:i" {% if settings.timeformat == 'd-m-Y H:i' %} selected="selected"{% endif %}>{{ 'now'|date("d-m-Y H:i") }}</option>
+                <option value="m-d-Y H:i" {% if settings.timeformat == 'm-d-Y H:i' %} selected="selected"{% endif %}>{{ 'now'|date("m-d-Y H:i") }}</option>
+                <option value="D M j H:i" {% if settings.timeformat == 'D M j H:i' %} selected="selected"{% endif %}>{{ 'now'|date("D M j H:i") }}</option>
+                <option value="F j, Y, g:i a" {% if settings.timeformat == 'F j, Y, g:i a' %} selected="selected"{% endif %}>{{ 'now'|date("F j, Y, g:i a") }}</option>
             </select>
             <div id="timeformatHelp" class="form-text">
                 The time format. How date/time values are formatted.
@@ -146,12 +146,12 @@
     </div>
 
     <div class="row mb-3">
-        <label for="timeformat" class="col-sm-2 col-form-label">Probe colors</label>
+        <label class="col-sm-2 col-form-label">Probe colors</label>
         <div class="col-sm-10">
             <div class="row">
-                {% for probeid,probecolor in localsettings.probeColors %}
+                {% for probeid,probecolor in settings.probeColors %}
                     <div class="col col-3 col-md-auto py-1">
-                        <input type="color" class="form-control form-control-color" id="probe-{{ probeid }}" name="localsettings[probeColors][{{ probeid }}]" value="{{ probecolor }}" title="Probe {{ probeid }}">
+                        <input type="color" class="form-control form-control-color" id="probe-{{ probeid }}" name="settings[probeColors][{{ probeid }}]" value="{{ probecolor }}" title="Probe {{ probeid }}">
                         <div id="timeformatHelp" class="form-text">
                             Probe {{ probeid }}
                         </div>
@@ -162,19 +162,30 @@
     </div>
 
     <div class="row mb-3">
-        <label for="timeformat" class="col-sm-2 col-form-label">Probe visibility</label>
+        <label class="col-sm-2 col-form-label">Probe visibility</label>
         <div class="col-sm-10">
             <div class="row">
-                
-                {% for probeid,visible in localsettings.probeVisibility %}
-                    
+                {% for probeid,visible in settings.probeVisibility %}      
                     <div class="col col-3 col-md-auto py-1">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="probe-visible-{{ probeid }}" name="localsettings[probeVisibility][{{ probeid }}]" title="Probe {{ probeid }}" {% if visible == 1 %}checked{% endif %}>
-                            <label class="form-check-label" for="flexSwitchCheckDefault">{{ probeid }}</label>
-                          </div>
+                            <input class="form-check-input" type="checkbox" id="probe-visible-{{ probeid }}" name="settings[probeVisibility][{{ probeid }}]" title="Probe {{ probeid }}" {% if visible == 1 %}checked{% endif %}>
+                            <label class="form-check-label" for="probe-visible-{{ probeid }}">{{ probeid }}</label>
+                        </div>
                     </div>
                 {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">Dark mode</label>
+        <div class="col-sm-10">
+            <div class="row">     
+                <div class="col col-3 col-md-auto py-1">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="dark-mode" name="settings[darkMode]" title="Dark mode" {% if settings.darkMode == 1 %}checked{% endif %}>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -184,7 +195,7 @@
 <div class="row py-3">
     <h4>Grilleye</h4>
 </div>
-{% if grilleyesettings|length ==0 %}
+{% if grilleyesettings|length == 0 %}
     <!-- If there are not grilleye settings disable the entire form -->
     {% set disabled = 'disabled' %}
 {% endif %}
@@ -314,3 +325,4 @@
 </form>
 
 {% endblock %}
+
