@@ -48,6 +48,14 @@ You can also install this on your own webserver and make the src directory the e
 
 **If you dont have composer installed yet you can follow the instructions at [getcomposer.org](https://getcomposer.org/download/)**
 
+## Updating
+
+- navigate to your directory
+- `docker compose down`
+- `git pull`
+- `docker compose build`
+- `docker compose up -d`
+
 ## Roadmap
 - Dark mode
 
