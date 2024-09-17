@@ -839,6 +839,7 @@ $app->map(['GET', 'POST'], '/probes/settings', function (Request $request, Respo
 
     $view = Twig::fromRequest($request);
     return $view->render($response, 'probesettings.twig', [
+        'settings'      => $this->get('settings'),
         'sortedpresets' => $this->get('presets'),
         'probes'        => $probes,
     ]);
