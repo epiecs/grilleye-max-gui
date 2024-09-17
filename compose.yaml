@@ -4,8 +4,3 @@ services:
     build: .
     ports:
       - 8000:80
-    networks:
-      - hosted_websites
-networks:
-  hosted_websites:
-    external: true
