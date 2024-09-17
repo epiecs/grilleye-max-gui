@@ -50,6 +50,7 @@ You can also install this on your own webserver and make the src directory the e
 
 ## Updating
 
+- backup your phone-id from the webpage
 - navigate to your directory
 - `docker compose down`
 - `git pull`
