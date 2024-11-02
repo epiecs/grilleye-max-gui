@@ -70,8 +70,8 @@ window.addEventListener('load', function () {
 
             livechart.updateSeries(liveTemperatures);
 
-            //Refresh all data every minute to prevent memory leaks
-            await new Promise(resolve => setTimeout(resolve, 60000));
+            // refresh every second
+            await new Promise(resolve => setTimeout(resolve, 1000));
             await initializeLiveTemperatures();
         }
     };
