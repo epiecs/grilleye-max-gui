@@ -71,6 +71,8 @@ If you want to test the api via the Swagger ui you will have to use the `CORS-PR
 ## How to get your phone-id
 > **There are a few methods described here that you can use to get your phone id. At the moment the only way that still works is by using postman or the python script. The method where you can extract the phone-id via a serial connection (putty) no longer works. It is just kept here in the documentation for posterity.**
 
+> **IMPORTANT** You will need the CP2101 driver: (https://www.silabs.com/developer-tools/usb-to-uart-bridge-vcp-drivers)
+
 ## Start developing with this repo
 Just run the development compose file with `docker compose -f compose-dev.yaml up --watch`.
 
